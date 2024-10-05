@@ -15,10 +15,12 @@ export const metadata: Metadata = {
   description: 'AI-Powered Canva clone using Next.js',
 };
 
-export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
+const RootLayout = ({ children }: Readonly<PropsWithChildren>) => {
   return (
     <html lang="en">
       <body className={cn(inter.className, 'antialiased')}>{children}</body>
     </html>
   );
-}
+};
+
+export default RootLayout;
