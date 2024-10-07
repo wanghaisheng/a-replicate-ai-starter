@@ -21,10 +21,15 @@ export const Editor = () => {
       controlsAboveOverlay: true,
       preserveObjectStacking: true,
     });
+
     init({
       initialCanvas: canvas,
       initialContainer: containerRef.current!,
     });
+
+    return () => {
+      canvas.dispose();
+    };
   }, [init]);
 
   return (
