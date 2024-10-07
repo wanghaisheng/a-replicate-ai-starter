@@ -31,11 +31,11 @@ export const ShapeSidebar = ({ editor, activeTool, onChangeActiveTool }: ShapeSi
 
           <ShapeTool icon={FaSquareFull} onClick={() => editor?.addRectangle()} />
 
-          <ShapeTool icon={IoTriangle} onClick={() => {}} />
+          <ShapeTool icon={IoTriangle} onClick={() => editor?.addTriangle()} />
 
-          <ShapeTool icon={IoTriangle} iconClassName="rotate-180" onClick={() => {}} />
+          <ShapeTool icon={IoTriangle} iconClassName="rotate-180" onClick={() => editor?.addInverseTriangle()} />
 
-          <ShapeTool icon={FaDiamond} onClick={() => {}} />
+          <ShapeTool icon={FaDiamond} onClick={() => editor?.addDiamond()} />
         </div>
       </ScrollArea>
 
