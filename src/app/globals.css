@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  @apply h-full;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -64,6 +59,12 @@ body {
 }
 
 @layer base {
+  html,
+  body,
+  :root {
+    @apply h-full;
+  }
+
   * {
     @apply border-border;
   }

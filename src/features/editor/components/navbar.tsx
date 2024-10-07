@@ -8,10 +8,17 @@ import { Hint } from '@/components/hint';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
+import type { ActiveTool } from '@/features/editor/types';
+import { cn } from '@/lib/utils';
 
 import { Logo } from './logo';
 
-export const Navbar = () => {
+interface NavbarProps {
+  activeTool: ActiveTool;
+  onChangeActiveTool: (tool: ActiveTool) => void;
+}
+
+export const Navbar = ({ activeTool, onChangeActiveTool }: NavbarProps) => {
   return (
     <nav className="w-full flex items-center p-4 h-[68px] gap-x-8 border-b lg:pl-[34px]">
       <Logo />
@@ -40,7 +47,12 @@ export const Navbar = () => {
         <Separator orientation="vertical" className="mx-2" />
 
         <Hint label="Select" side="bottom" sideOffset={10}>
-          <Button variant="ghost" size="icon" onClick={() => {}} className="">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onChangeActiveTool('select')}
+            className={cn(activeTool === 'select' && 'bg-gray-100')}
+          >
             <MousePointerClick className="size-4" />
           </Button>
         </Hint>
