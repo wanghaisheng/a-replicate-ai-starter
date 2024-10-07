@@ -25,6 +25,7 @@ const buildEditor = ({
   setStrokeColor,
   strokeWidth,
   setStrokeWidth,
+  selectedObjects,
 }: BuildEditorProps): Editor => {
   const addToCanvas = (object: fabric.Object) => {
     center(object);
@@ -180,6 +181,7 @@ const buildEditor = ({
     fillColor,
     strokeColor,
     strokeWidth,
+    selectedObjects,
   };
 };
 
@@ -213,10 +215,11 @@ export const useEditor = () => {
   });
 
   const editor = useMemo(() => {
-    if (canvas) return buildEditor({ canvas, fillColor, setFillColor, strokeColor, setStrokeColor, strokeWidth, setStrokeWidth });
+    if (canvas)
+      return buildEditor({ canvas, fillColor, setFillColor, strokeColor, setStrokeColor, strokeWidth, setStrokeWidth, selectedObjects });
 
     return undefined;
-  }, [canvas, fillColor, strokeColor, strokeWidth]);
+  }, [canvas, fillColor, strokeColor, strokeWidth, selectedObjects]);
 
   const init = useCallback(({ initialCanvas, initialContainer }: { initialCanvas: fabric.Canvas; initialContainer: HTMLDivElement }) => {
     const initialWorkspace = new fabric.Rect({
