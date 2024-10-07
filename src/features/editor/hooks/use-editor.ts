@@ -1,7 +1,57 @@
 import { fabric } from 'fabric';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+
+import { type BuildEditorProps, CIRCLE_OPTIONS, type Editor, RECTANGLE_OPTIONS } from '@/features/editor/types';
 
 import { useAutoResize } from './use-auto-resize';
+
+const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
+  const addToCanvas = (object: fabric.Object) => {
+    center(object);
+    canvas.add(object);
+    canvas.setActiveObject(object);
+  };
+
+  const getWorkspace = () => {
+    return canvas.getObjects().find((object) => object.name === 'clip');
+  };
+
+  const center = (object: fabric.Object) => {
+    const workspace = getWorkspace();
+    const centerPoint = workspace?.getCenterPoint();
+
+    if (!centerPoint) return;
+
+    // @ts-ignore _centerObject method types aren't added.
+    canvas._centerObject(object, centerPoint);
+  };
+
+  return {
+    addCircle: () => {
+      const object = new fabric.Circle({
+        ...CIRCLE_OPTIONS,
+      });
+
+      addToCanvas(object);
+    },
+    addSoftRectangle: () => {
+      const object = new fabric.Rect({
+        ...RECTANGLE_OPTIONS,
+        rx: 50,
+        ry: 50,
+      });
+
+      addToCanvas(object);
+    },
+    addRectangle: () => {
+      const object = new fabric.Rect({
+        ...RECTANGLE_OPTIONS,
+      });
+
+      addToCanvas(object);
+    },
+  };
+};
 
 export const useEditor = () => {
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
@@ -21,6 +71,12 @@ export const useEditor = () => {
     borderOpacityWhenMoving: 1,
     cornerStrokeColor: '#3b82f6',
   });
+
+  const editor = useMemo(() => {
+    if (canvas) return buildEditor({ canvas });
+
+    return undefined;
+  }, [canvas]);
 
   const init = useCallback(({ initialCanvas, initialContainer }: { initialCanvas: fabric.Canvas; initialContainer: HTMLDivElement }) => {
     const initialWorkspace = new fabric.Rect({
@@ -47,5 +103,5 @@ export const useEditor = () => {
     setContainer(initialContainer);
   }, []);
 
-  return { init };
+  return { init, editor };
 };
