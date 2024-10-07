@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { Hint } from '@/components/hint';
 import { Button } from '@/components/ui/button';
 import type { ActiveTool, Editor } from '@/features/editor/types';
@@ -12,16 +10,7 @@ interface ToolbarProps {
 }
 
 export const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
-  const selectedObject = editor?.canvas.getActiveObject();
-
-  const getProperty = (property: any) => {
-    if (!selectedObject) return null;
-
-    return selectedObject.get(property);
-  };
-
-  const fillColor = getProperty('fill');
-  const [properties, setProperties] = useState({ fillColor });
+  const fillColor = editor?.fillColor;
 
   return (
     <div className="shrink-0 h-[56px] border-b bg-white w-full flex items-center overflow-x-auto z-[49] p-2 gap-x-2">
@@ -37,7 +26,7 @@ export const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps
               aria-hidden
               className="rounded-sm size-4 border"
               style={{
-                backgroundColor: typeof fillColor === 'string' ? fillColor : 'black',
+                backgroundColor: fillColor,
               }}
             />
           </Button>

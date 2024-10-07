@@ -51,6 +51,7 @@ const buildEditor = ({
       setFillColor(color);
 
       canvas.getActiveObjects().forEach((object) => object.set({ fill: color }));
+      canvas.renderAll();
     },
     changeStrokeColor: (color: string) => {
       setStrokeColor(color);
@@ -64,15 +65,21 @@ const buildEditor = ({
 
         object.set({ stroke: color });
       });
+
+      canvas.renderAll();
     },
     changeStrokeWidth: (width: number) => {
       setStrokeWidth(width);
 
       canvas.getActiveObjects().forEach((object) => object.set({ strokeWidth: width }));
+      canvas.renderAll();
     },
     addCircle: () => {
       const object = new fabric.Circle({
         ...CIRCLE_OPTIONS,
+        fill: fillColor,
+        stroke: strokeColor,
+        strokeWidth: strokeWidth,
       });
 
       addToCanvas(object);
@@ -89,6 +96,9 @@ const buildEditor = ({
     addRectangle: () => {
       const object = new fabric.Rect({
         ...RECTANGLE_OPTIONS,
+        fill: fillColor,
+        stroke: strokeColor,
+        strokeWidth: strokeWidth,
       });
 
       addToCanvas(object);
@@ -96,6 +106,9 @@ const buildEditor = ({
     addTriangle: () => {
       const object = new fabric.Triangle({
         ...TRIANGLE_OPTIONS,
+        fill: fillColor,
+        stroke: strokeColor,
+        strokeWidth: strokeWidth,
       });
 
       addToCanvas(object);
@@ -121,6 +134,9 @@ const buildEditor = ({
         ],
         {
           ...TRIANGLE_OPTIONS,
+          fill: fillColor,
+          stroke: strokeColor,
+          strokeWidth: strokeWidth,
         },
       );
 
@@ -151,6 +167,9 @@ const buildEditor = ({
         ],
         {
           ...DIAMOND_OPTIONS,
+          fill: fillColor,
+          stroke: strokeColor,
+          strokeWidth: strokeWidth,
         },
       );
 
