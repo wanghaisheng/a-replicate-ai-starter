@@ -9,7 +9,9 @@ import {
   EditorHookProps,
   FILL_COLOR,
   FONT_FAMILY,
+  FONT_LINETHROUGH,
   FONT_STYLE,
+  FONT_UNDERLINE,
   FONT_WEIGHT,
   RECTANGLE_OPTIONS,
   STROKE_COLOR,
@@ -58,20 +60,6 @@ const buildEditor = ({
   };
 
   return {
-    changeFontStyle: (fontStyle) => {
-      canvas.getActiveObjects().forEach((object) => {
-        if (isTextType(object.type)) object._set('fontStyle', fontStyle);
-      });
-
-      canvas.renderAll();
-    },
-    changeFontWeight: (fontWeight) => {
-      canvas.getActiveObjects().forEach((object) => {
-        if (isTextType(object.type)) object._set('fontWeight', fontWeight);
-      });
-
-      canvas.renderAll();
-    },
     changeOpacity: (opacity) => {
       canvas.getActiveObjects().forEach((object) => {
         object.set({ opacity });
@@ -98,6 +86,34 @@ const buildEditor = ({
 
       const workspace = getWorkspace();
       workspace?.sendToBack();
+    },
+    changeFontUnderline: (underline) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) object._set('underline', underline);
+      });
+
+      canvas.renderAll();
+    },
+    changeFontLinethrough: (linethrough) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) object._set('linethrough', linethrough);
+      });
+
+      canvas.renderAll();
+    },
+    changeFontStyle: (fontStyle) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) object._set('fontStyle', fontStyle);
+      });
+
+      canvas.renderAll();
+    },
+    changeFontWeight: (fontWeight) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) object._set('fontWeight', fontWeight);
+      });
+
+      canvas.renderAll();
     },
     changeFontFamily: (fontFamily) => {
       setFontFamily(fontFamily);
@@ -260,12 +276,32 @@ const buildEditor = ({
 
       addToCanvas(object);
     },
+    getActiveFontUnderline: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) return FONT_UNDERLINE;
+
+      // @ts-ignore underline attribute types aren't added.
+      const value = selectedObject.get('underline') || FONT_UNDERLINE;
+
+      return value as boolean;
+    },
+    getActiveFontLinethrough: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) return FONT_LINETHROUGH;
+
+      // @ts-ignore linethrough attribute types aren't added.
+      const value = selectedObject.get('linethrough') || FONT_LINETHROUGH;
+
+      return value as boolean;
+    },
     getActiveFontStyle: () => {
       const selectedObject = selectedObjects[0];
 
       if (!selectedObject) return FONT_STYLE;
 
-      // @ts-ignore fontWeight attribute types aren't added.
+      // @ts-ignore fontStyle attribute types aren't added.
       const value = selectedObject.get('fontStyle') || FONT_STYLE;
 
       return value as string;
@@ -285,7 +321,7 @@ const buildEditor = ({
 
       if (!selectedObject) return fontFamily;
 
-      // @ts-ignore fontFamilty attribute types aren't added.
+      // @ts-ignore fontFamily attribute types aren't added.
       const value = selectedObject.get('fontFamily') || fontFamily;
 
       return value as string;

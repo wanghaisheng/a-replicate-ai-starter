@@ -72,6 +72,8 @@ export const FONT_SIZE = 32;
 export const FONT_FAMILY = 'Arial';
 export const FONT_WEIGHT = 400;
 export const FONT_STYLE = 'normal';
+export const FONT_LINETHROUGH = false;
+export const FONT_UNDERLINE = false;
 
 export const TEXT_OPTIONS = {
   type: 'textbox',
@@ -147,6 +149,8 @@ export interface Editor {
   changeOpacity: (opacity: number) => void;
   bringForward: () => void;
   sendBackwards: () => void;
+  changeFontUnderline: (underline: boolean) => void;
+  changeFontLinethrough: (linethrough: boolean) => void;
   changeFontStyle: (fontStyle: string) => void;
   changeFontWeight: (fontWeight: number) => void;
   changeFontFamily: (fontFamily: string) => void;
@@ -161,6 +165,8 @@ export interface Editor {
   addTriangle: () => void;
   addInverseTriangle: () => void;
   addDiamond: () => void;
+  getActiveFontUnderline: () => boolean;
+  getActiveFontLinethrough: () => boolean;
   getActiveFontStyle: () => string;
   getActiveFontWeight: () => number;
   getActiveFontFamily: () => string;

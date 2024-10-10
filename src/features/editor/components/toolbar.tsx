@@ -1,12 +1,22 @@
 import { ArrowDown, ArrowUp, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { BsBorderWidth } from 'react-icons/bs';
-import { FaBold, FaItalic } from 'react-icons/fa';
+import { FaBold, FaItalic, FaStrikethrough, FaUnderline } from 'react-icons/fa';
 import { RxTransparencyGrid } from 'react-icons/rx';
 
 import { Hint } from '@/components/hint';
 import { Button } from '@/components/ui/button';
-import { type ActiveTool, type Editor, FILL_COLOR, FONT_FAMILY, FONT_STYLE, FONT_WEIGHT, STROKE_COLOR } from '@/features/editor/types';
+import {
+  type ActiveTool,
+  type Editor,
+  FILL_COLOR,
+  FONT_FAMILY,
+  FONT_LINETHROUGH,
+  FONT_STYLE,
+  FONT_UNDERLINE,
+  FONT_WEIGHT,
+  STROKE_COLOR,
+} from '@/features/editor/types';
 import { isTextType } from '@/features/editor/utils';
 
 interface ToolbarProps {
@@ -21,6 +31,8 @@ export const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps
   const initialFontFamily = editor?.getActiveFontFamily() || FONT_FAMILY;
   const initialFontWeight = editor?.getActiveFontWeight() || FONT_WEIGHT;
   const initialFontStyle = editor?.getActiveFontStyle() || FONT_STYLE;
+  const initialFontLinethrough = editor?.getActiveFontLinethrough() || FONT_LINETHROUGH;
+  const initialFontUnderline = editor?.getActiveFontUnderline() || FONT_UNDERLINE;
 
   const [properties, setProperties] = useState({
     fillColor: initialFillColor,
@@ -28,6 +40,8 @@ export const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps
     fontFamily: initialFontFamily,
     fontWeight: initialFontWeight,
     fontStyle: initialFontStyle,
+    fontLinethrough: initialFontLinethrough,
+    fontUnderline: initialFontUnderline,
   });
 
   const selectedObject = editor?.selectedObjects[0];
@@ -57,6 +71,32 @@ export const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps
     setProperties((prevProperties) => ({
       ...prevProperties,
       fontStyle: newValue,
+    }));
+  };
+
+  const toggleLinethrough = () => {
+    if (!selectedObject) return;
+
+    const newValue = properties.fontLinethrough ? false : true;
+
+    editor?.changeFontLinethrough(newValue);
+
+    setProperties((prevProperties) => ({
+      ...prevProperties,
+      fontLinethrough: newValue,
+    }));
+  };
+
+  const toggleUnderline = () => {
+    if (!selectedObject) return;
+
+    const newValue = properties.fontUnderline ? false : true;
+
+    editor?.changeFontUnderline(newValue);
+
+    setProperties((prevProperties) => ({
+      ...prevProperties,
+      fontUnderline: newValue,
     }));
   };
 
@@ -140,6 +180,26 @@ export const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps
           <Hint label="Italic" side="bottom" sideOffset={5}>
             <Button onClick={toggleItalic} size="icon" variant={properties.fontStyle === 'italic' ? 'secondary' : 'ghost'}>
               <FaItalic className="size-4" />
+            </Button>
+          </Hint>
+        </div>
+      )}
+
+      {isText && (
+        <div className="flex items-center h-full justify-center">
+          <Hint label="Underline" side="bottom" sideOffset={5}>
+            <Button onClick={toggleUnderline} size="icon" variant={properties.fontUnderline ? 'secondary' : 'ghost'}>
+              <FaUnderline className="size-4" />
+            </Button>
+          </Hint>
+        </div>
+      )}
+
+      {isText && (
+        <div className="flex items-center h-full justify-center">
+          <Hint label="Strike" side="bottom" sideOffset={5}>
+            <Button onClick={toggleLinethrough} size="icon" variant={properties.fontLinethrough ? 'secondary' : 'ghost'}>
+              <FaStrikethrough className="size-4" />
             </Button>
           </Hint>
         </div>
