@@ -107,6 +107,7 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+  changeOpacity: (opacity: number) => void;
   bringForward: () => void;
   sendBackwards: () => void;
   changeFillColor: (color: string) => void;
@@ -119,6 +120,7 @@ export interface Editor {
   addTriangle: () => void;
   addInverseTriangle: () => void;
   addDiamond: () => void;
+  getActiveOpacity: () => number;
   getActiveFillColor: () => string;
   getActiveStrokeColor: () => string;
   getActiveStrokeWidth: () => number;
