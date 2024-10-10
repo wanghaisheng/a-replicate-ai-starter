@@ -114,9 +114,9 @@ export interface Editor {
   addInverseTriangle: () => void;
   addDiamond: () => void;
   getActiveFillColor: () => string;
+  getActiveStrokeColor: () => string;
 
   canvas: fabric.Canvas;
-  strokeColor: string;
   strokeWidth: number;
   selectedObjects: fabric.Object[];
 }

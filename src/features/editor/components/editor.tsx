@@ -11,6 +11,7 @@ import { Footer } from './footer';
 import { Navbar } from './navbar';
 import { ShapeSidebar } from './shape-sidebar';
 import { Sidebar } from './sidebar';
+import { StrokeColorSidebar } from './stroke-color-sidebar';
 import { Toolbar } from './toolbar';
 
 export const Editor = () => {
@@ -67,6 +68,7 @@ export const Editor = () => {
         <Sidebar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
         <ShapeSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
         <FillColorSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
+        <StrokeColorSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
 
         <main className="bg-muted flex-1 overflow-auto relative flex flex-col">
           <Toolbar
