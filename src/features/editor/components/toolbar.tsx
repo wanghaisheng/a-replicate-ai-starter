@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUp } from 'lucide-react';
+import { ArrowDown, ArrowUp, ChevronDown } from 'lucide-react';
 import { BsBorderWidth } from 'react-icons/bs';
 import { RxTransparencyGrid } from 'react-icons/rx';
 
@@ -17,6 +17,7 @@ interface ToolbarProps {
 export const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
   const fillColor = editor?.getActiveFillColor();
   const strokeColor = editor?.getActiveStrokeColor();
+  const fontFamily = editor?.getActiveFontFamily();
 
   const selectedObjectType = editor?.selectedObjects[0]?.type;
 
@@ -78,6 +79,22 @@ export const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps
               className={cn(activeTool === 'stroke-width' && 'bg-gray-100')}
             >
               <BsBorderWidth className="size-4" />
+            </Button>
+          </Hint>
+        </div>
+      )}
+
+      {isText && (
+        <div className="flex items-center h-full justify-center">
+          <Hint label="Font" side="bottom" sideOffset={5}>
+            <Button
+              onClick={() => onChangeActiveTool('font')}
+              size="sm"
+              variant="ghost"
+              className={cn(activeTool === 'font' && 'bg-gray-100')}
+            >
+              <div className="max-w-[100px] truncate">{fontFamily}</div>
+              <ChevronDown className="size-4 ml-2 shrink-0" />
             </Button>
           </Hint>
         </div>

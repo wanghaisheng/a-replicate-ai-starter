@@ -8,6 +8,7 @@ import {
   type Editor,
   EditorHookProps,
   FILL_COLOR,
+  FONT_FAMILY,
   RECTANGLE_OPTIONS,
   STROKE_COLOR,
   STROKE_DASH_ARRAY,
@@ -30,6 +31,8 @@ const buildEditor = ({
   setStrokeWidth,
   strokeDashArray,
   setStrokeDashArray,
+  fontFamily,
+  setFontFamily,
   selectedObjects,
 }: BuildEditorProps): Editor => {
   const addToCanvas = (object: fabric.Object) => {
@@ -79,6 +82,15 @@ const buildEditor = ({
 
       const workspace = getWorkspace();
       workspace?.sendToBack();
+    },
+    changeFontFamily: (fontFamily) => {
+      setFontFamily(fontFamily);
+
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) object._set('fontFamily', fontFamily);
+      });
+
+      canvas.renderAll();
     },
     changeFillColor: (color) => {
       setFillColor(color);
@@ -232,6 +244,16 @@ const buildEditor = ({
 
       addToCanvas(object);
     },
+    getActiveFontFamily: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) return fontFamily;
+
+      // @ts-ignore fontFamilty attribute types aren't added.
+      const value = selectedObject.get('fontFamily') || fontFamily;
+
+      return value as string;
+    },
     getActiveOpacity: () => {
       const selectedObject = selectedObjects[0];
 
@@ -239,7 +261,6 @@ const buildEditor = ({
 
       const value = selectedObject.get('opacity') || 1;
 
-      // Gradients and patterns are not passed.
       return value;
     },
     getActiveFillColor: () => {
@@ -259,7 +280,6 @@ const buildEditor = ({
 
       const value = selectedObject.get('stroke') || strokeColor;
 
-      // Gradients and patterns are not passed.
       return value;
     },
     getActiveStrokeWidth: () => {
@@ -269,7 +289,6 @@ const buildEditor = ({
 
       const value = selectedObject.get('strokeWidth') || strokeWidth;
 
-      // Gradients and patterns are not passed.
       return value;
     },
     getActiveStrokeDashArray: () => {
@@ -279,7 +298,6 @@ const buildEditor = ({
 
       const value = selectedObject.get('strokeDashArray') || strokeDashArray;
 
-      // Gradients and patterns are not passed.
       return value;
     },
 
@@ -293,6 +311,7 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const [selectedObjects, setSelectedObjects] = useState<fabric.Object[]>([]);
 
+  const [fontFamily, setFontFamily] = useState(FONT_FAMILY);
   const [fillColor, setFillColor] = useState(FILL_COLOR);
   const [strokeColor, setStrokeColor] = useState(STROKE_COLOR);
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
@@ -331,11 +350,13 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
         setStrokeWidth,
         strokeDashArray,
         setStrokeDashArray,
+        fontFamily,
+        setFontFamily,
         selectedObjects,
       });
 
     return undefined;
-  }, [canvas, fillColor, strokeColor, strokeWidth, strokeDashArray, selectedObjects]);
+  }, [canvas, fillColor, strokeColor, strokeWidth, strokeDashArray, fontFamily, selectedObjects]);
 
   const init = useCallback(({ initialCanvas, initialContainer }: { initialCanvas: fabric.Canvas; initialContainer: HTMLDivElement }) => {
     const initialWorkspace = new fabric.Rect({
