@@ -147,6 +147,7 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+  delete: () => void;
   changeOpacity: (opacity: number) => void;
   bringForward: () => void;
   sendBackwards: () => void;
