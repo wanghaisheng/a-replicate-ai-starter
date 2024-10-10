@@ -197,9 +197,18 @@ const buildEditor = ({
       // Gradients and patterns are not passed.
       return value;
     },
+    getActiveStrokeWidth: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) return strokeWidth;
+
+      const value = selectedObject.get('strokeWidth') || strokeWidth;
+
+      // Gradients and patterns are not passed.
+      return value;
+    },
 
     canvas,
-    strokeWidth,
     selectedObjects,
   };
 };
