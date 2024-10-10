@@ -10,6 +10,7 @@ import {
   FILL_COLOR,
   FONT_FAMILY,
   FONT_LINETHROUGH,
+  FONT_SIZE,
   FONT_STYLE,
   FONT_UNDERLINE,
   FONT_WEIGHT,
@@ -87,6 +88,13 @@ const buildEditor = ({
 
       const workspace = getWorkspace();
       workspace?.sendToBack();
+    },
+    changeFontSize: (fontSize) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) object._set('fontSize', fontSize);
+      });
+
+      canvas.renderAll();
     },
     changeTextAlign: (textAlign) => {
       canvas.getActiveObjects().forEach((object) => {
@@ -283,6 +291,16 @@ const buildEditor = ({
       );
 
       addToCanvas(object);
+    },
+    getActiveFontSize: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) return FONT_SIZE;
+
+      // @ts-ignore fontSize attribute types aren't added.
+      const value = selectedObject.get('fontSize') || FONT_SIZE;
+
+      return value as number;
     },
     getActiveTextAlign: () => {
       const selectedObject = selectedObjects[0];

@@ -150,6 +150,7 @@ export interface Editor {
   changeOpacity: (opacity: number) => void;
   bringForward: () => void;
   sendBackwards: () => void;
+  changeFontSize: (fontSize: number) => void;
   changeTextAlign: (textAlign: string) => void;
   changeFontUnderline: (underline: boolean) => void;
   changeFontLinethrough: (linethrough: boolean) => void;
@@ -167,6 +168,7 @@ export interface Editor {
   addTriangle: () => void;
   addInverseTriangle: () => void;
   addDiamond: () => void;
+  getActiveFontSize: () => number;
   getActiveTextAlign: () => string;
   getActiveFontUnderline: () => boolean;
   getActiveFontLinethrough: () => boolean;
