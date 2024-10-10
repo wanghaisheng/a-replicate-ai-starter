@@ -13,7 +13,7 @@ interface FillColorSidebarProps {
 }
 
 export const FillColorSidebar = ({ editor, activeTool, onChangeActiveTool }: FillColorSidebarProps) => {
-  const color = editor?.fillColor || FILL_COLOR;
+  const color = editor?.getActiveFillColor() || FILL_COLOR;
 
   const onClose = () => onChangeActiveTool('select');
 
