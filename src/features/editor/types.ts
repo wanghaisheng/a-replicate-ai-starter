@@ -1,4 +1,5 @@
 import { fabric } from 'fabric';
+import type { ITextboxOptions } from 'fabric/fabric-impl';
 import material from 'material-colors';
 
 export const selectionDependentTools = ['fill', 'font', 'filter', 'opacity', 'remove-bg', 'stroke-color', 'stroke-width'];
@@ -46,6 +47,17 @@ export const FILL_COLOR = 'rgba(0, 0, 0, 1)';
 export const STROKE_COLOR = 'rgba(0, 0, 0, 1)';
 export const STROKE_WIDTH = 2;
 export const STROKE_DASH_ARRAY = [];
+export const FONT_SIZE = 32;
+export const FONT_FAMILY = 'Arial';
+
+export const TEXT_OPTIONS = {
+  type: 'textbox',
+  left: 100,
+  top: 100,
+  fill: FILL_COLOR,
+  fontSize: FONT_SIZE,
+  fontFamily: FONT_FAMILY,
+};
 
 export const CIRCLE_OPTIONS = {
   radius: 225,
@@ -114,6 +126,7 @@ export interface Editor {
   changeStrokeColor: (color: string) => void;
   changeStrokeWidth: (width: number) => void;
   changeStrokeDashArray: (strokeDashArray: number[]) => void;
+  addText: (text: string, options?: ITextboxOptions) => void;
   addCircle: () => void;
   addSoftRectangle: () => void;
   addRectangle: () => void;

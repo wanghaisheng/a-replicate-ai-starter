@@ -12,6 +12,7 @@ import {
   STROKE_COLOR,
   STROKE_DASH_ARRAY,
   STROKE_WIDTH,
+  TEXT_OPTIONS,
   TRIANGLE_OPTIONS,
 } from '@/features/editor/types';
 import { isTextType } from '@/features/editor/utils';
@@ -52,7 +53,7 @@ const buildEditor = ({
   };
 
   return {
-    changeOpacity: (opacity: number) => {
+    changeOpacity: (opacity) => {
       canvas.getActiveObjects().forEach((object) => {
         object.set({ opacity });
       });
@@ -79,13 +80,13 @@ const buildEditor = ({
       const workspace = getWorkspace();
       workspace?.sendToBack();
     },
-    changeFillColor: (color: string) => {
+    changeFillColor: (color) => {
       setFillColor(color);
 
       canvas.getActiveObjects().forEach((object) => object.set({ fill: color }));
       canvas.renderAll();
     },
-    changeStrokeColor: (color: string) => {
+    changeStrokeColor: (color) => {
       setStrokeColor(color);
 
       canvas.getActiveObjects().forEach((object) => {
@@ -100,7 +101,7 @@ const buildEditor = ({
 
       canvas.renderAll();
     },
-    changeStrokeWidth: (width: number) => {
+    changeStrokeWidth: (width) => {
       setStrokeWidth(width);
 
       canvas.getActiveObjects().forEach((object) => object.set({ strokeWidth: width }));
@@ -111,6 +112,15 @@ const buildEditor = ({
 
       canvas.getActiveObjects().forEach((object) => object.set({ strokeDashArray }));
       canvas.renderAll();
+    },
+    addText: (value, options) => {
+      const object = new fabric.Textbox(value, {
+        ...TEXT_OPTIONS,
+        fill: fillColor,
+        ...options,
+      });
+
+      addToCanvas(object);
     },
     addCircle: () => {
       const object = new fabric.Circle({
