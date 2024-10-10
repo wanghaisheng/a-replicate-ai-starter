@@ -70,6 +70,7 @@ export const STROKE_WIDTH = 2;
 export const STROKE_DASH_ARRAY = [];
 export const FONT_SIZE = 32;
 export const FONT_FAMILY = 'Arial';
+export const FONT_WEIGHT = 400;
 
 export const TEXT_OPTIONS = {
   type: 'textbox',
@@ -145,6 +146,7 @@ export interface Editor {
   changeOpacity: (opacity: number) => void;
   bringForward: () => void;
   sendBackwards: () => void;
+  changeFontWeight: (fontWeight: number) => void;
   changeFontFamily: (fontFamily: string) => void;
   changeFillColor: (color: string) => void;
   changeStrokeColor: (color: string) => void;
@@ -157,6 +159,7 @@ export interface Editor {
   addTriangle: () => void;
   addInverseTriangle: () => void;
   addDiamond: () => void;
+  getActiveFontWeight: () => number;
   getActiveFontFamily: () => string;
   getActiveOpacity: () => number;
   getActiveFillColor: () => string;
