@@ -17,6 +17,7 @@ import {
   STROKE_COLOR,
   STROKE_DASH_ARRAY,
   STROKE_WIDTH,
+  TEXT_ALIGN,
   TEXT_OPTIONS,
   TRIANGLE_OPTIONS,
 } from '@/features/editor/types';
@@ -86,6 +87,13 @@ const buildEditor = ({
 
       const workspace = getWorkspace();
       workspace?.sendToBack();
+    },
+    changeTextAlign: (textAlign) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) object._set('textAlign', textAlign);
+      });
+
+      canvas.renderAll();
     },
     changeFontUnderline: (underline) => {
       canvas.getActiveObjects().forEach((object) => {
@@ -275,6 +283,16 @@ const buildEditor = ({
       );
 
       addToCanvas(object);
+    },
+    getActiveTextAlign: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) return TEXT_ALIGN;
+
+      // @ts-ignore textAlign attribute types aren't added.
+      const value = selectedObject.get('textAlign') || TEXT_ALIGN;
+
+      return value as string;
     },
     getActiveFontUnderline: () => {
       const selectedObject = selectedObjects[0];

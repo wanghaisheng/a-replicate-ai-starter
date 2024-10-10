@@ -74,6 +74,7 @@ export const FONT_WEIGHT = 400;
 export const FONT_STYLE = 'normal';
 export const FONT_LINETHROUGH = false;
 export const FONT_UNDERLINE = false;
+export const TEXT_ALIGN = 'left';
 
 export const TEXT_OPTIONS = {
   type: 'textbox',
@@ -149,6 +150,7 @@ export interface Editor {
   changeOpacity: (opacity: number) => void;
   bringForward: () => void;
   sendBackwards: () => void;
+  changeTextAlign: (textAlign: string) => void;
   changeFontUnderline: (underline: boolean) => void;
   changeFontLinethrough: (linethrough: boolean) => void;
   changeFontStyle: (fontStyle: string) => void;
@@ -165,6 +167,7 @@ export interface Editor {
   addTriangle: () => void;
   addInverseTriangle: () => void;
   addDiamond: () => void;
+  getActiveTextAlign: () => string;
   getActiveFontUnderline: () => boolean;
   getActiveFontLinethrough: () => boolean;
   getActiveFontStyle: () => string;
