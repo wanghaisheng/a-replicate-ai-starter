@@ -9,6 +9,7 @@ import {
   EditorHookProps,
   FILL_COLOR,
   FONT_FAMILY,
+  FONT_STYLE,
   FONT_WEIGHT,
   RECTANGLE_OPTIONS,
   STROKE_COLOR,
@@ -57,11 +58,17 @@ const buildEditor = ({
   };
 
   return {
+    changeFontStyle: (fontStyle) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) object._set('fontStyle', fontStyle);
+      });
+
+      canvas.renderAll();
+    },
     changeFontWeight: (fontWeight) => {
       canvas.getActiveObjects().forEach((object) => {
         if (isTextType(object.type)) object._set('fontWeight', fontWeight);
       });
-      ``;
 
       canvas.renderAll();
     },
@@ -252,6 +259,16 @@ const buildEditor = ({
       );
 
       addToCanvas(object);
+    },
+    getActiveFontStyle: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) return FONT_STYLE;
+
+      // @ts-ignore fontWeight attribute types aren't added.
+      const value = selectedObject.get('fontStyle') || FONT_STYLE;
+
+      return value as string;
     },
     getActiveFontWeight: () => {
       const selectedObject = selectedObjects[0];

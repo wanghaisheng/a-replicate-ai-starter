@@ -1,12 +1,12 @@
 import { ArrowDown, ArrowUp, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { BsBorderWidth } from 'react-icons/bs';
-import { FaBold } from 'react-icons/fa';
+import { FaBold, FaItalic } from 'react-icons/fa';
 import { RxTransparencyGrid } from 'react-icons/rx';
 
 import { Hint } from '@/components/hint';
 import { Button } from '@/components/ui/button';
-import { type ActiveTool, type Editor, FONT_WEIGHT } from '@/features/editor/types';
+import { type ActiveTool, type Editor, FILL_COLOR, FONT_FAMILY, FONT_STYLE, FONT_WEIGHT, STROKE_COLOR } from '@/features/editor/types';
 import { isTextType } from '@/features/editor/utils';
 
 interface ToolbarProps {
@@ -16,16 +16,18 @@ interface ToolbarProps {
 }
 
 export const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps) => {
-  const initialFillColor = editor?.getActiveFillColor();
-  const initialStrokeColor = editor?.getActiveStrokeColor();
-  const initialFontFamily = editor?.getActiveFontFamily();
+  const initialFillColor = editor?.getActiveFillColor() || FILL_COLOR;
+  const initialStrokeColor = editor?.getActiveStrokeColor() || STROKE_COLOR;
+  const initialFontFamily = editor?.getActiveFontFamily() || FONT_FAMILY;
   const initialFontWeight = editor?.getActiveFontWeight() || FONT_WEIGHT;
+  const initialFontStyle = editor?.getActiveFontStyle() || FONT_STYLE;
 
   const [properties, setProperties] = useState({
     fillColor: initialFillColor,
     strokeColor: initialStrokeColor,
     fontFamily: initialFontFamily,
     fontWeight: initialFontWeight,
+    fontStyle: initialFontStyle,
   });
 
   const selectedObject = editor?.selectedObjects[0];
@@ -41,6 +43,20 @@ export const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps
     setProperties((prevProperties) => ({
       ...prevProperties,
       fontWeight: newValue,
+    }));
+  };
+
+  const toggleItalic = () => {
+    if (!selectedObject) return;
+
+    const isItalic = properties.fontStyle === 'italic';
+    const newValue = isItalic ? 'normal' : 'italic';
+
+    editor?.changeFontStyle(newValue);
+
+    setProperties((prevProperties) => ({
+      ...prevProperties,
+      fontStyle: newValue,
     }));
   };
 
@@ -114,6 +130,16 @@ export const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps
           <Hint label="Bold" side="bottom" sideOffset={5}>
             <Button onClick={toggleBold} size="icon" variant={properties.fontWeight > 500 ? 'secondary' : 'ghost'}>
               <FaBold className="size-4" />
+            </Button>
+          </Hint>
+        </div>
+      )}
+
+      {isText && (
+        <div className="flex items-center h-full justify-center">
+          <Hint label="Italic" side="bottom" sideOffset={5}>
+            <Button onClick={toggleItalic} size="icon" variant={properties.fontStyle === 'italic' ? 'secondary' : 'ghost'}>
+              <FaItalic className="size-4" />
             </Button>
           </Hint>
         </div>
