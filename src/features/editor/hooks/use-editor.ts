@@ -10,6 +10,7 @@ import {
   FILL_COLOR,
   RECTANGLE_OPTIONS,
   STROKE_COLOR,
+  STROKE_DASH_ARRAY,
   STROKE_WIDTH,
   TRIANGLE_OPTIONS,
 } from '@/features/editor/types';
@@ -26,6 +27,8 @@ const buildEditor = ({
   setStrokeColor,
   strokeWidth,
   setStrokeWidth,
+  strokeDashArray,
+  setStrokeDashArray,
   selectedObjects,
 }: BuildEditorProps): Editor => {
   const addToCanvas = (object: fabric.Object) => {
@@ -76,12 +79,19 @@ const buildEditor = ({
       canvas.getActiveObjects().forEach((object) => object.set({ strokeWidth: width }));
       canvas.renderAll();
     },
+    changeStrokeDashArray: (strokeDashArray: number[]) => {
+      setStrokeDashArray(strokeDashArray);
+
+      canvas.getActiveObjects().forEach((object) => object.set({ strokeDashArray }));
+      canvas.renderAll();
+    },
     addCircle: () => {
       const object = new fabric.Circle({
         ...CIRCLE_OPTIONS,
         fill: fillColor,
         stroke: strokeColor,
-        strokeWidth: strokeWidth,
+        strokeWidth,
+        strokeDashArray,
       });
 
       addToCanvas(object);
@@ -91,6 +101,10 @@ const buildEditor = ({
         ...RECTANGLE_OPTIONS,
         rx: 50,
         ry: 50,
+        fill: fillColor,
+        stroke: strokeColor,
+        strokeWidth,
+        strokeDashArray,
       });
 
       addToCanvas(object);
@@ -100,7 +114,8 @@ const buildEditor = ({
         ...RECTANGLE_OPTIONS,
         fill: fillColor,
         stroke: strokeColor,
-        strokeWidth: strokeWidth,
+        strokeWidth,
+        strokeDashArray,
       });
 
       addToCanvas(object);
@@ -110,7 +125,8 @@ const buildEditor = ({
         ...TRIANGLE_OPTIONS,
         fill: fillColor,
         stroke: strokeColor,
-        strokeWidth: strokeWidth,
+        strokeWidth,
+        strokeDashArray,
       });
 
       addToCanvas(object);
@@ -138,7 +154,8 @@ const buildEditor = ({
           ...TRIANGLE_OPTIONS,
           fill: fillColor,
           stroke: strokeColor,
-          strokeWidth: strokeWidth,
+          strokeWidth,
+          strokeDashArray,
         },
       );
 
@@ -171,7 +188,8 @@ const buildEditor = ({
           ...DIAMOND_OPTIONS,
           fill: fillColor,
           stroke: strokeColor,
-          strokeWidth: strokeWidth,
+          strokeWidth,
+          strokeDashArray,
         },
       );
 
@@ -207,6 +225,16 @@ const buildEditor = ({
       // Gradients and patterns are not passed.
       return value;
     },
+    getActiveStrokeDashArray: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) return strokeDashArray;
+
+      const value = selectedObject.get('strokeDashArray') || strokeDashArray;
+
+      // Gradients and patterns are not passed.
+      return value;
+    },
 
     canvas,
     selectedObjects,
@@ -221,6 +249,7 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const [fillColor, setFillColor] = useState(FILL_COLOR);
   const [strokeColor, setStrokeColor] = useState(STROKE_COLOR);
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
+  const [strokeDashArray, setStrokeDashArray] = useState<number[]>(STROKE_DASH_ARRAY);
 
   useAutoResize({
     canvas,
@@ -245,10 +274,21 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
 
   const editor = useMemo(() => {
     if (canvas)
-      return buildEditor({ canvas, fillColor, setFillColor, strokeColor, setStrokeColor, strokeWidth, setStrokeWidth, selectedObjects });
+      return buildEditor({
+        canvas,
+        fillColor,
+        setFillColor,
+        strokeColor,
+        setStrokeColor,
+        strokeWidth,
+        setStrokeWidth,
+        strokeDashArray,
+        setStrokeDashArray,
+        selectedObjects,
+      });
 
     return undefined;
-  }, [canvas, fillColor, strokeColor, strokeWidth, selectedObjects]);
+  }, [canvas, fillColor, strokeColor, strokeWidth, strokeDashArray, selectedObjects]);
 
   const init = useCallback(({ initialCanvas, initialContainer }: { initialCanvas: fabric.Canvas; initialContainer: HTMLDivElement }) => {
     const initialWorkspace = new fabric.Rect({
