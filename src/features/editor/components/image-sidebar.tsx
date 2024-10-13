@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { type ActiveTool, type Editor } from '@/features/editor/types';
 import { useGetImages } from '@/features/images/api/use-get-images';
+import { UploadButton } from '@/lib/uploadthing';
 import { cn } from '@/lib/utils';
 
 import { ToolSidebarClose } from './tool-sidebar-close';
@@ -18,11 +19,28 @@ interface ImageSidebarProps {
 
 export const ImageSidebar = ({ editor, activeTool, onChangeActiveTool }: ImageSidebarProps) => {
   const { data, isLoading, isError } = useGetImages();
+
   const onClose = () => onChangeActiveTool('select');
 
   return (
     <aside className={cn('bg-white relative border z-40 w-[360px] h-full flex flex-col', activeTool === 'images' ? 'visible' : 'hidden')}>
       <ToolSidebarHeader title="Images" description="Add images to your canvas." />
+
+      <div className="p-4 border-b">
+        <UploadButton
+          appearance={{
+            button: 'w-full text-sm font-medium',
+            allowedContent: 'hidden',
+          }}
+          content={{
+            button: 'Upload image',
+          }}
+          endpoint="imageUploader"
+          onClientUploadComplete={(res) => {
+            editor?.addImage(res[0].url);
+          }}
+        />
+      </div>
 
       {isLoading && (
         <div className="flex items-center justify-center flex-1">

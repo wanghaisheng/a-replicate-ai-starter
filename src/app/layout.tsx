@@ -1,7 +1,10 @@
+import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import type { PropsWithChildren } from 'react';
+import { extractRouterConfig } from 'uploadthing/server';
 
+import { appFileRouter } from '@/app/api/uploadthing/core';
 import { Providers } from '@/components/providers';
 import { cn } from '@/lib/utils';
 
@@ -20,7 +23,11 @@ const RootLayout = ({ children }: Readonly<PropsWithChildren>) => {
   return (
     <html lang="en">
       <body className={cn(inter.className, 'antialiased')}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <NextSSRPlugin routerConfig={extractRouterConfig(appFileRouter)} />
+
+          {children}
+        </Providers>
       </body>
     </html>
   );
