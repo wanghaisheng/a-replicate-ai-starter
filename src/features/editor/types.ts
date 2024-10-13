@@ -147,6 +147,7 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+  addImage: (imageUrl: string) => void;
   delete: () => void;
   changeOpacity: (opacity: number) => void;
   bringForward: () => void;
