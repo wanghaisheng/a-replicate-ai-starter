@@ -12,6 +12,11 @@ const nextConfig = {
         hostname: 'utfs.io',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'replicate.delivery',
+        port: '',
+      },
     ],
   },
 };

@@ -6,6 +6,7 @@ import { extractRouterConfig } from 'uploadthing/server';
 
 import { appFileRouter } from '@/app/api/uploadthing/core';
 import { Providers } from '@/components/providers';
+import { Toaster } from '@/components/ui/sonner';
 import { cn } from '@/lib/utils';
 
 import './globals.css';
@@ -25,6 +26,7 @@ const RootLayout = ({ children }: Readonly<PropsWithChildren>) => {
       <body className={cn(inter.className, 'antialiased')}>
         <Providers>
           <NextSSRPlugin routerConfig={extractRouterConfig(appFileRouter)} />
+          <Toaster theme="light" closeButton richColors />
 
           {children}
         </Providers>
