@@ -1,4 +1,4 @@
-import { AlignCenter, AlignLeft, AlignRight, ArrowDown, ArrowUp, ChevronDown, Trash } from 'lucide-react';
+import { AlignCenter, AlignLeft, AlignRight, ArrowDown, ArrowUp, ChevronDown, SquareSplitHorizontal, Trash } from 'lucide-react';
 import { useState } from 'react';
 import { BsBorderWidth } from 'react-icons/bs';
 import { FaBold, FaItalic, FaStrikethrough, FaUnderline } from 'react-icons/fa';
@@ -289,6 +289,20 @@ export const Toolbar = ({ editor, activeTool, onChangeActiveTool }: ToolbarProps
           <Hint label="Filters" side="bottom" sideOffset={5}>
             <Button onClick={() => onChangeActiveTool('filter')} size="icon" variant={activeTool === 'filter' ? 'secondary' : 'ghost'}>
               <TbColorFilter className="size-4" />
+            </Button>
+          </Hint>
+        </div>
+      )}
+
+      {isImage && (
+        <div className="flex items-center h-full justify-center">
+          <Hint label="Remove Background" side="bottom" sideOffset={5}>
+            <Button
+              onClick={() => onChangeActiveTool('remove-bg')}
+              size="icon"
+              variant={activeTool === 'remove-bg' ? 'secondary' : 'ghost'}
+            >
+              <SquareSplitHorizontal className="size-4" />
             </Button>
           </Hint>
         </div>
