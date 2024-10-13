@@ -4,8 +4,7 @@ export {};
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      // remove test later
-      TEST: string;
+      NEXT_PUBLIC_APP_BASE_URL: string;
     }
   }
 }
