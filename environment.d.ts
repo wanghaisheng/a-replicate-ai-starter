@@ -9,6 +9,9 @@ declare global {
 
       // unsplash api access key
       NEXT_PUBLIC_UNSPLASH_ACCESS_KEY: string;
+
+      // replicate api token
+      REPLICATE_API_TOKEN: string;
     }
   }
 }
