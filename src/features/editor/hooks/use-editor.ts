@@ -22,7 +22,7 @@ import {
   TEXT_OPTIONS,
   TRIANGLE_OPTIONS,
 } from '@/features/editor/types';
-import { isTextType } from '@/features/editor/utils';
+import { createFilter, isTextType } from '@/features/editor/utils';
 
 import { useAutoResize } from './use-auto-resize';
 import { useCanvasEvents } from './use-canvas-events';
@@ -62,6 +62,22 @@ const buildEditor = ({
   };
 
   return {
+    changeImageFilter: (effect) => {
+      const objects = canvas.getActiveObjects();
+
+      objects.forEach((object) => {
+        if (object.type === 'image') {
+          const imageObject = object as fabric.Image;
+
+          const filter = createFilter(effect);
+
+          imageObject.filters = filter ? [filter] : [];
+
+          imageObject.applyFilters();
+          canvas.renderAll();
+        }
+      });
+    },
     addImage: (imageUrl) => {
       fabric.Image.fromURL(
         imageUrl,

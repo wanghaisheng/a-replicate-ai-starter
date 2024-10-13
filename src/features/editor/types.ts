@@ -2,6 +2,32 @@ import { fabric } from 'fabric';
 import type { ITextboxOptions } from 'fabric/fabric-impl';
 import material from 'material-colors';
 
+export const filters = [
+  'none',
+  'polaroid',
+  'sepia',
+  'kodachrome',
+  'contrast',
+  'brightness',
+  'greyscale',
+  'brownie',
+  'vintage',
+  'technicolor',
+  'pixelate',
+  'invert',
+  'blur',
+  'sharpen',
+  'emboss',
+  'removecolor',
+  'blacknwhite',
+  'vibrance',
+  'blendcolor',
+  'huerotate',
+  'resize',
+  'saturation',
+  'gamma',
+] as const;
+
 export const fonts = [
   'Arial',
   'Arial Black',
@@ -147,6 +173,7 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+  changeImageFilter: (effect: (typeof filters)[number]) => void;
   addImage: (imageUrl: string) => void;
   delete: () => void;
   changeOpacity: (opacity: number) => void;
