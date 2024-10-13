@@ -9,6 +9,7 @@ import { type ActiveTool, selectionDependentTools } from '@/features/editor/type
 import { FillColorSidebar } from './fill-color-sidebar';
 import { FontSidebar } from './font-sidebar';
 import { Footer } from './footer';
+import { ImageSidebar } from './image-sidebar';
 import { Navbar } from './navbar';
 import { ShapeSidebar } from './shape-sidebar';
 import { Sidebar } from './sidebar';
@@ -77,6 +78,7 @@ export const Editor = () => {
         <OpacitySidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
         <TextSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
         <FontSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
+        <ImageSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
 
         <main className="bg-muted flex-1 overflow-auto relative flex flex-col">
           <Toolbar
