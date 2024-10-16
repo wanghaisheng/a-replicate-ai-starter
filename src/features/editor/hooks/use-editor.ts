@@ -26,8 +26,11 @@ import { createFilter, isTextType } from '@/features/editor/utils';
 
 import { useAutoResize } from './use-auto-resize';
 import { useCanvasEvents } from './use-canvas-events';
+import { useClipboard } from './use-clipboard';
 
 const buildEditor = ({
+  copy,
+  paste,
   canvas,
   fillColor,
   setFillColor,
@@ -62,6 +65,8 @@ const buildEditor = ({
   };
 
   return {
+    onCopy: () => copy(),
+    onPaste: () => paste(),
     changeImageFilter: (effect) => {
       const objects = canvas.getActiveObjects();
 
@@ -463,6 +468,10 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
   const [strokeDashArray, setStrokeDashArray] = useState<number[]>(STROKE_DASH_ARRAY);
 
+  const { copy, paste } = useClipboard({
+    canvas,
+  });
+
   useAutoResize({
     canvas,
     container,
@@ -487,6 +496,8 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const editor = useMemo(() => {
     if (canvas)
       return buildEditor({
+        copy,
+        paste,
         canvas,
         fillColor,
         setFillColor,
@@ -502,7 +513,7 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
       });
 
     return undefined;
-  }, [canvas, fillColor, strokeColor, strokeWidth, strokeDashArray, fontFamily, selectedObjects]);
+  }, [copy, paste, canvas, fillColor, strokeColor, strokeWidth, strokeDashArray, fontFamily, selectedObjects]);
 
   const init = useCallback(({ initialCanvas, initialContainer }: { initialCanvas: fabric.Canvas; initialContainer: HTMLDivElement }) => {
     const initialWorkspace = new fabric.Rect({
