@@ -15,6 +15,7 @@ import { Footer } from './footer';
 import { ImageSidebar } from './image-sidebar';
 import { Navbar } from './navbar';
 import { RemoveBgSidebar } from './remove-bg-sidebar';
+import { SettingsSidebar } from './settings-sidebar';
 import { ShapeSidebar } from './shape-sidebar';
 import { Sidebar } from './sidebar';
 import { StrokeColorSidebar } from './stroke-color-sidebar';
@@ -87,6 +88,7 @@ export const Editor = () => {
         <AiSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
         <RemoveBgSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
         <DrawSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
+        <SettingsSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
 
         <main className="bg-muted flex-1 overflow-auto relative flex flex-col">
           <Toolbar

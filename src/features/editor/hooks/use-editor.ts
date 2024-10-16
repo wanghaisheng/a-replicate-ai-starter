@@ -29,6 +29,7 @@ import { useCanvasEvents } from './use-canvas-events';
 import { useClipboard } from './use-clipboard';
 
 const buildEditor = ({
+  autoZoom,
   copy,
   paste,
   canvas,
@@ -65,6 +66,23 @@ const buildEditor = ({
   };
 
   return {
+    getWorkspace,
+    changeSize: (size: { width: number; height: number }) => {
+      const workspace = getWorkspace();
+
+      workspace?.set(size);
+      autoZoom();
+
+      // TODO: Save
+    },
+    changeBackground: (background: string) => {
+      const workspace = getWorkspace();
+
+      workspace?.set({ fill: background });
+      canvas.renderAll();
+
+      // TODO: Save
+    },
     enableDrawingMode: () => {
       canvas.discardActiveObject();
       canvas.renderAll();
@@ -486,7 +504,7 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
     canvas,
   });
 
-  useAutoResize({
+  const { autoZoom } = useAutoResize({
     canvas,
     container,
   });
@@ -510,6 +528,7 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const editor = useMemo(() => {
     if (canvas)
       return buildEditor({
+        autoZoom,
         copy,
         paste,
         canvas,
@@ -527,7 +546,7 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
       });
 
     return undefined;
-  }, [copy, paste, canvas, fillColor, strokeColor, strokeWidth, strokeDashArray, fontFamily, selectedObjects]);
+  }, [autoZoom, copy, paste, canvas, fillColor, strokeColor, strokeWidth, strokeDashArray, fontFamily, selectedObjects]);
 
   const init = useCallback(({ initialCanvas, initialContainer }: { initialCanvas: fabric.Canvas; initialContainer: HTMLDivElement }) => {
     const initialWorkspace = new fabric.Rect({
