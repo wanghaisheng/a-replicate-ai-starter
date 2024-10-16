@@ -7,6 +7,7 @@ import { useEditor } from '@/features/editor/hooks/use-editor';
 import { type ActiveTool, selectionDependentTools } from '@/features/editor/types';
 
 import { AiSidebar } from './ai-sidebar';
+import { DrawSidebar } from './draw-sidebar';
 import { FillColorSidebar } from './fill-color-sidebar';
 import { FilterSidebar } from './filter-sidebar';
 import { FontSidebar } from './font-sidebar';
@@ -31,26 +32,26 @@ export const Editor = () => {
     if (selectionDependentTools.includes(activeTool)) setActiveTool('select');
   }, [activeTool]);
 
-  const onChangeActiveTool = useCallback(
-    (tool: ActiveTool) => {
-      if (tool === activeTool) return setActiveTool('select');
-
-      if (tool === 'draw') {
-        // TODO: Enable draw mode
-      }
-
-      if (activeTool === 'draw') {
-        // TODO: Disable draw mode
-      }
-
-      setActiveTool(tool);
-    },
-    [activeTool],
-  );
-
   const { init, editor } = useEditor({
     clearSelectionCallback: onClearSelection,
   });
+
+  const onChangeActiveTool = useCallback(
+    (tool: ActiveTool) => {
+      if (tool === 'draw') {
+        editor?.enableDrawingMode();
+      }
+
+      if (activeTool === 'draw') {
+        editor?.disableDrawingMode();
+      }
+
+      if (tool === activeTool) return setActiveTool('select');
+
+      setActiveTool(tool);
+    },
+    [activeTool, editor],
+  );
 
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasRef.current, {
@@ -85,6 +86,7 @@ export const Editor = () => {
         <FilterSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
         <AiSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
         <RemoveBgSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
+        <DrawSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
 
         <main className="bg-muted flex-1 overflow-auto relative flex flex-col">
           <Toolbar
