@@ -14,6 +14,7 @@ import {
   FONT_STYLE,
   FONT_UNDERLINE,
   FONT_WEIGHT,
+  JSON_KEYS,
   RECTANGLE_OPTIONS,
   STROKE_COLOR,
   STROKE_DASH_ARRAY,
@@ -27,8 +28,14 @@ import { createFilter, isTextType } from '@/features/editor/utils';
 import { useAutoResize } from './use-auto-resize';
 import { useCanvasEvents } from './use-canvas-events';
 import { useClipboard } from './use-clipboard';
+import { useHistory } from './use-history';
 
 const buildEditor = ({
+  save,
+  canRedo,
+  canUndo,
+  undo,
+  redo,
   autoZoom,
   copy,
   paste,
@@ -67,6 +74,8 @@ const buildEditor = ({
 
   return {
     autoZoom,
+    canUndo,
+    canRedo,
     getWorkspace,
     zoomIn: () => {
       let zoomRatio = canvas.getZoom();
@@ -88,7 +97,7 @@ const buildEditor = ({
       workspace?.set(size);
       autoZoom();
 
-      // TODO: Save
+      save();
     },
     changeBackground: (background: string) => {
       const workspace = getWorkspace();
@@ -96,7 +105,7 @@ const buildEditor = ({
       workspace?.set({ fill: background });
       canvas.renderAll();
 
-      // TODO: Save
+      save();
     },
     enableDrawingMode: () => {
       canvas.discardActiveObject();
@@ -109,6 +118,8 @@ const buildEditor = ({
     disableDrawingMode: () => {
       canvas.isDrawingMode = false;
     },
+    onUndo: () => undo(),
+    onRedo: () => redo(),
     onCopy: () => copy(),
     onPaste: () => paste(),
     changeImageFilter: (effect) => {
@@ -515,6 +526,10 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
   const [strokeDashArray, setStrokeDashArray] = useState<number[]>(STROKE_DASH_ARRAY);
 
+  const { save, canRedo, canUndo, undo, redo, canvasHistory, setHistoryIndex } = useHistory({
+    canvas,
+  });
+
   const { copy, paste } = useClipboard({
     canvas,
   });
@@ -526,6 +541,7 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
 
   useCanvasEvents({
     canvas,
+    save,
     setSelectedObjects,
     clearSelectionCallback,
   });
@@ -543,6 +559,11 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const editor = useMemo(() => {
     if (canvas)
       return buildEditor({
+        save,
+        canRedo,
+        canUndo,
+        undo,
+        redo,
         autoZoom,
         copy,
         paste,
@@ -561,32 +582,57 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
       });
 
     return undefined;
-  }, [autoZoom, copy, paste, canvas, fillColor, strokeColor, strokeWidth, strokeDashArray, fontFamily, selectedObjects]);
+  }, [
+    save,
+    canRedo,
+    canUndo,
+    undo,
+    redo,
+    autoZoom,
+    copy,
+    paste,
+    canvas,
+    fillColor,
+    strokeColor,
+    strokeWidth,
+    strokeDashArray,
+    fontFamily,
+    selectedObjects,
+  ]);
 
-  const init = useCallback(({ initialCanvas, initialContainer }: { initialCanvas: fabric.Canvas; initialContainer: HTMLDivElement }) => {
-    const initialWorkspace = new fabric.Rect({
-      width: 900,
-      height: 1200,
-      name: 'clip',
-      fill: 'white',
-      selectable: false,
-      hasControls: false,
-      shadow: new fabric.Shadow({
-        color: 'rgba(0, 0, 0, 0.8)',
-        blur: 5,
-      }),
-    });
+  const init = useCallback(
+    ({ initialCanvas, initialContainer }: { initialCanvas: fabric.Canvas; initialContainer: HTMLDivElement }) => {
+      const initialWorkspace = new fabric.Rect({
+        width: 900,
+        height: 1200,
+        name: 'clip',
+        fill: 'white',
+        selectable: false,
+        hasControls: false,
+        shadow: new fabric.Shadow({
+          color: 'rgba(0, 0, 0, 0.8)',
+          blur: 5,
+        }),
+      });
 
-    initialCanvas.setWidth(initialContainer.offsetWidth);
-    initialCanvas.setHeight(initialContainer.offsetHeight);
+      initialCanvas.setWidth(initialContainer.offsetWidth);
+      initialCanvas.setHeight(initialContainer.offsetHeight);
 
-    initialCanvas.add(initialWorkspace);
-    initialCanvas.centerObject(initialWorkspace);
-    initialCanvas.clipPath = initialWorkspace;
+      initialCanvas.add(initialWorkspace);
+      initialCanvas.centerObject(initialWorkspace);
+      initialCanvas.clipPath = initialWorkspace;
 
-    setCanvas(initialCanvas);
-    setContainer(initialContainer);
-  }, []);
+      setCanvas(initialCanvas);
+      setContainer(initialContainer);
+
+      const currentState = JSON.stringify(initialCanvas.toJSON(JSON_KEYS));
+
+      canvasHistory.current = [currentState];
+      setHistoryIndex(0);
+    },
+    // No need, this is from set state
+    [canvasHistory, setHistoryIndex],
+  );
 
   return { init, editor };
 };
