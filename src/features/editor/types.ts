@@ -176,7 +176,10 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+  autoZoom: () => void;
   getWorkspace: () => fabric.Object | undefined;
+  zoomIn: () => void;
+  zoomOut: () => void;
   changeBackground: (background: string) => void;
   changeSize: (size: { width: number; height: number }) => void;
   enableDrawingMode: () => void;
