@@ -185,7 +185,7 @@ export type BuildEditorProps = {
 export interface Editor {
   savePNG: () => void;
   saveJPG: () => void;
-  saveSVG: () => void;
+  saveJPEG: () => void;
   saveJSON: () => void;
   loadJSON: (json: string) => void;
   autoZoom: () => void;

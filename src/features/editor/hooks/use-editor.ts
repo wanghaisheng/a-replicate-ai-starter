@@ -84,13 +84,13 @@ const buildEditor = ({
     autoZoom();
   };
 
-  const saveSVG = () => {
+  const saveJPEG = () => {
     const options = generateSaveOptions();
     canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
 
     const dataUrl = canvas.toDataURL(options);
 
-    downloadFile(dataUrl, 'svg');
+    downloadFile(dataUrl, 'jpeg');
     autoZoom();
   };
 
@@ -139,7 +139,7 @@ const buildEditor = ({
   return {
     savePNG,
     saveJPG,
-    saveSVG,
+    saveJPEG,
     saveJSON,
     loadJSON,
     autoZoom,

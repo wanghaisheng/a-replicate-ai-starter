@@ -1,8 +1,9 @@
 'use client';
 
 import { ChevronDown, Download, MousePointerClick, Redo2, Undo2 } from 'lucide-react';
-import { BsCloudCheck, BsFiletypeJpg, BsFiletypeJson, BsFiletypePng, BsFiletypeSvg } from 'react-icons/bs';
+import { BsCloudCheck, BsFileImage, BsFiletypeJpg, BsFiletypePng } from 'react-icons/bs';
 import { CiFileOn } from 'react-icons/ci';
+import { LuFileJson } from 'react-icons/lu';
 import { useFilePicker } from 'use-file-picker';
 
 import { Hint } from '@/components/hint';
@@ -98,7 +99,7 @@ export const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) 
 
             <DropdownMenuContent align="end" className="min-w-60">
               <DropdownMenuItem onClick={() => editor?.saveJSON()} className="flex items-center gap-x-2">
-                <BsFiletypeJson className="size-7 text-slate-700" />
+                <LuFileJson className="size-7 text-slate-700" />
 
                 <div>
                   <p>JSON</p>
@@ -111,7 +112,7 @@ export const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) 
 
                 <div>
                   <p>PNG</p>
-                  <p className="text-xs text-muted-foreground">Best for sharing on the web.</p>
+                  <p className="text-xs text-muted-foreground">Best for editing.</p>
                 </div>
               </DropdownMenuItem>
 
@@ -124,12 +125,12 @@ export const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) 
                 </div>
               </DropdownMenuItem>
 
-              <DropdownMenuItem onClick={() => editor?.saveSVG()} className="flex items-center gap-x-2">
-                <BsFiletypeSvg className="size-7 text-slate-700" />
+              <DropdownMenuItem onClick={() => editor?.saveJPEG()} className="flex items-center gap-x-2">
+                <BsFileImage className="size-7 text-slate-700" />
 
                 <div>
-                  <p>SVG</p>
-                  <p className="text-xs text-muted-foreground">Best for editing in vector software.</p>
+                  <p>JPEG</p>
+                  <p className="text-xs text-muted-foreground">Best for sharing on the web.</p>
                 </div>
               </DropdownMenuItem>
             </DropdownMenuContent>
