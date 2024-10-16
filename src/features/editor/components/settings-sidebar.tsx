@@ -60,11 +60,11 @@ export const SettingsSidebar = ({ editor, activeTool, onChangeActiveTool }: Sett
         <form className="space-y-4 p-4" onSubmit={onSubmit}>
           <div className="space-y-2">
             <Label>Height</Label>
-            <Input placeholder="Height" value={height} type="number" onChange={(e) => changeHeight(e.target.value)} />
+            <Input placeholder="Height" min={100} max={5000} value={height} type="number" onChange={(e) => changeHeight(e.target.value)} />
           </div>
           <div className="space-y-2">
             <Label>Width</Label>
-            <Input placeholder="Width" value={width} type="number" onChange={(e) => changeWidth(e.target.value)} />
+            <Input placeholder="Width" min={100} max={5000} value={width} type="number" onChange={(e) => changeWidth(e.target.value)} />
           </div>
 
           <Button type="submit" className="w-full">
