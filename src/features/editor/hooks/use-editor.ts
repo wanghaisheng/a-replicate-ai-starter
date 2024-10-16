@@ -23,13 +23,14 @@ import {
   TEXT_OPTIONS,
   TRIANGLE_OPTIONS,
 } from '@/features/editor/types';
-import { createFilter, isTextType } from '@/features/editor/utils';
+import { createFilter, downloadFile, isTextType, transformText } from '@/features/editor/utils';
 
 import { useAutoResize } from './use-auto-resize';
 import { useCanvasEvents } from './use-canvas-events';
 import { useClipboard } from './use-clipboard';
 import { useHistory } from './use-history';
 import { useHotkeys } from './use-hotkeys';
+import { useWindowEvents } from './use-window-events';
 
 const buildEditor = ({
   save,
@@ -59,6 +60,68 @@ const buildEditor = ({
     canvas.setActiveObject(object);
   };
 
+  const generateSaveOptions = () => {
+    const { width, height, left, top } = getWorkspace() as fabric.Rect;
+
+    return {
+      name: 'Image',
+      format: 'png',
+      quality: 1,
+      width,
+      height,
+      left,
+      top,
+    };
+  };
+
+  const savePNG = () => {
+    const options = generateSaveOptions();
+    canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+
+    const dataUrl = canvas.toDataURL(options);
+
+    downloadFile(dataUrl, 'png');
+    autoZoom();
+  };
+
+  const saveSVG = () => {
+    const options = generateSaveOptions();
+    canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+
+    const dataUrl = canvas.toDataURL(options);
+
+    downloadFile(dataUrl, 'svg');
+    autoZoom();
+  };
+
+  const saveJPG = () => {
+    const options = generateSaveOptions();
+    canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+
+    const dataUrl = canvas.toDataURL(options);
+
+    downloadFile(dataUrl, 'jpg');
+    autoZoom();
+  };
+
+  const saveJSON = async () => {
+    const dataUrl = canvas.toJSON(JSON_KEYS);
+
+    await transformText(dataUrl.objects);
+
+    const fileString = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(dataUrl, null, '\t'))}`;
+
+    downloadFile(fileString, 'json');
+  };
+
+  const loadJSON = (json: string) => {
+    const data = JSON.parse(json);
+
+    canvas.loadFromJSON(data, () => {
+      autoZoom();
+    });
+  };
+
   const getWorkspace = () => {
     return canvas.getObjects().find((object) => object.name === 'clip');
   };
@@ -74,6 +137,11 @@ const buildEditor = ({
   };
 
   return {
+    savePNG,
+    saveJPG,
+    saveSVG,
+    saveJSON,
+    loadJSON,
     autoZoom,
     canUndo,
     canRedo,
@@ -539,6 +607,8 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
     canvas,
     container,
   });
+
+  useWindowEvents();
 
   useCanvasEvents({
     canvas,

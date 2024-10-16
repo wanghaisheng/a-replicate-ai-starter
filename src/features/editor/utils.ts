@@ -1,7 +1,30 @@
+import { createId } from '@paralleldrive/cuid2';
 import { fabric } from 'fabric';
 import type { RGBColor } from 'react-color';
 
 import type { filters } from './types';
+
+export async function transformText(objects: any) {
+  if (!objects) return;
+
+  objects.forEach((object: any) => {
+    if (object.objects) transformText(object.objects);
+    else {
+      object.type === 'text' && (object.type = 'textbox');
+    }
+  });
+}
+
+export function downloadFile(file: string, type: string) {
+  const anchorElement = document.createElement('a');
+
+  anchorElement.href = file;
+  anchorElement.download = `${createId()}.${type}`;
+
+  document.body.appendChild(anchorElement);
+  anchorElement.click();
+  anchorElement.remove();
+}
 
 export function isTextType(type: string | undefined) {
   return type === 'text' || type === 'i-text' || type === 'textbox';
