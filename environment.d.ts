@@ -12,6 +12,9 @@ declare global {
 
       // replicate api token
       REPLICATE_API_TOKEN: string;
+
+      // postgres neon db url
+      DATABASE_URL: string;
     }
   }
 }
