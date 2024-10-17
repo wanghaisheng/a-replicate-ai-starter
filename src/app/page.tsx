@@ -1,9 +1,13 @@
-import { auth } from '@/auth';
+import { protectServer } from '@/features/auth/utils';
 
 const HomePage = async () => {
-  const session = await auth();
+  await protectServer();
 
-  return <main>{JSON.stringify(session)}</main>;
+  return (
+    <main>
+      <h1>You are logged in!</h1>
+    </main>
+  );
 };
 
 export default HomePage;
