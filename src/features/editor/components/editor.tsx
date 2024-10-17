@@ -1,7 +1,7 @@
 'use client';
 
 import { fabric } from 'fabric';
-import { act, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useEditor } from '@/features/editor/hooks/use-editor';
 import { type ActiveTool, selectionDependentTools } from '@/features/editor/types';
