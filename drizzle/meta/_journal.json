@@ -15,6 +15,13 @@
       "when": 1729181157392,
       "tag": "0001_cultured_beast",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1729265549458,
+      "tag": "0002_glossy_cloak",
+      "breakpoints": true
     }
   ]
 }
