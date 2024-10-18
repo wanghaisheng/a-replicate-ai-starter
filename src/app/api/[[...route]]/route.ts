@@ -5,7 +5,7 @@ import ai from './ai';
 import images from './images';
 import users from './users';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 const app = new Hono().basePath('/api');
 
