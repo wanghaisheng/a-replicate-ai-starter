@@ -1,15 +1,14 @@
-import { auth } from '@/auth';
 import { protectServer } from '@/features/auth/utils';
+
+import { Banner } from './banner';
 
 const HomePage = async () => {
   await protectServer();
 
-  const session = await auth();
-
   return (
-    <main>
-      <h1>{JSON.stringify(session)}</h1>
-    </main>
+    <div className="flex flex-col space-y-6 max-w-screen-xl mx-auto pb-10">
+      <Banner />
+    </div>
   );
 };
 
