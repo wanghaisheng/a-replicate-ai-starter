@@ -10,6 +10,7 @@ import { Hint } from '@/components/hint';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
+import { UserButton } from '@/features/auth/components/user-button';
 import type { ActiveTool, Editor } from '@/features/editor/types';
 
 import { Logo } from './logo';
@@ -27,6 +28,7 @@ export const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) 
       if (plainFiles && plainFiles.length > 0) {
         const file = plainFiles[0];
         const reader = new FileReader();
+
         reader.readAsText(file, 'UTF-8');
         reader.onload = () => {
           editor?.loadJSON(reader.result as string);
@@ -136,7 +138,7 @@ export const Navbar = ({ editor, activeTool, onChangeActiveTool }: NavbarProps) 
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* TODO: Add user button */}
+          <UserButton />
         </div>
       </div>
     </nav>

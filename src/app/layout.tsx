@@ -1,10 +1,12 @@
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin';
 import type { Metadata } from 'next';
+import { SessionProvider } from 'next-auth/react';
 import { Inter } from 'next/font/google';
 import type { PropsWithChildren } from 'react';
 import { extractRouterConfig } from 'uploadthing/server';
 
 import { appFileRouter } from '@/app/api/uploadthing/core';
+import { auth } from '@/auth';
 import { Providers } from '@/components/providers';
 import { Toaster } from '@/components/ui/sonner';
 import { cn } from '@/lib/utils';
@@ -20,18 +22,22 @@ export const metadata: Metadata = {
   description: 'AI-Powered Canva clone using Next.js',
 };
 
-const RootLayout = ({ children }: Readonly<PropsWithChildren>) => {
-  return (
-    <html lang="en">
-      <body className={cn(inter.className, 'antialiased')}>
-        <Providers>
-          <NextSSRPlugin routerConfig={extractRouterConfig(appFileRouter)} />
-          <Toaster theme="light" closeButton richColors />
+const RootLayout = async ({ children }: Readonly<PropsWithChildren>) => {
+  const session = await auth();
 
-          {children}
-        </Providers>
-      </body>
-    </html>
+  return (
+    <SessionProvider session={session}>
+      <html lang="en">
+        <body className={cn(inter.className, 'antialiased')}>
+          <Providers>
+            <NextSSRPlugin routerConfig={extractRouterConfig(appFileRouter)} />
+            <Toaster theme="light" closeButton richColors />
+
+            {children}
+          </Providers>
+        </body>
+      </html>
+    </SessionProvider>
   );
 };
 
