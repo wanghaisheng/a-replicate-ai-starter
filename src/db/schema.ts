@@ -1,3 +1,4 @@
+import { createId } from '@paralleldrive/cuid2';
 import { relations } from 'drizzle-orm';
 import { boolean, integer, pgTable, primaryKey, text, timestamp } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
@@ -86,9 +87,7 @@ export const authenticators = pgTable(
 );
 
 export const projects = pgTable('project', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
+  id: text('id').primaryKey().$defaultFn(createId),
   name: text('name').notNull(),
   userId: text('userId')
     .notNull()
