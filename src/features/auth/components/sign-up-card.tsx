@@ -1,5 +1,6 @@
 'use client';
 
+import { TriangleAlert } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -13,7 +14,7 @@ import { Separator } from '@/components/ui/separator';
 import { useSignUp } from '@/features/auth/hooks/use-sign-up';
 
 export const SignUpCard = () => {
-  const { mutate: signUp, isPending } = useSignUp();
+  const { mutate: signUp, isPending, error } = useSignUp();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -51,6 +52,13 @@ export const SignUpCard = () => {
 
         <CardDescription>Use your email or another service to continue.</CardDescription>
       </CardHeader>
+
+      {!!error && (
+        <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-destructive mb-6">
+          <TriangleAlert className="size-4" />
+          <p>{error.message || 'Something went wrong!'}</p>
+        </div>
+      )}
 
       <CardContent className="space-y-5 px-0 pb-0">
         <form onSubmit={onCredentialSignUp} className="space-y-2.5">

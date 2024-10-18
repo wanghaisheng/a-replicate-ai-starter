@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
 import { InferRequestType, InferResponseType } from 'hono';
-import { toast } from 'sonner';
 
 import { client } from '@/lib/hono';
 
@@ -18,14 +17,6 @@ export const useSignUp = () => {
       if (!response.ok) throw new Error('An unknown error occured.');
 
       return data;
-    },
-    onError: (error) => {
-      toast.error('Something went wrong!', {
-        description: error.message,
-      });
-    },
-    onSuccess: () => {
-      toast.success('User created.');
     },
   });
 
