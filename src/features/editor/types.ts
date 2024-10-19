@@ -157,6 +157,7 @@ export const DIAMOND_OPTIONS = {
 
 export interface EditorHookProps {
   clearSelectionCallback?: () => void;
+  saveCallback?: (values: { json: string; height: number; width: number }) => void;
 }
 
 export type BuildEditorProps = {

@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useEditor } from '@/features/editor/hooks/use-editor';
 import { type ActiveTool, selectionDependentTools } from '@/features/editor/types';
 import type { ResponseType } from '@/features/projects/api/use-get-project';
+import { useUpdateProject } from '@/features/projects/api/use-update-project';
 
 import { AiSidebar } from './ai-sidebar';
 import { DrawSidebar } from './draw-sidebar';
@@ -30,9 +31,18 @@ interface EditorProps {
 }
 
 export const Editor = ({ initialData }: EditorProps) => {
+  const { mutate: updateProject } = useUpdateProject(initialData.id);
+
   const [activeTool, setActiveTool] = useState<ActiveTool>('select');
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const debouncedSave = useCallback(
+    (values: { json: string; height: number; width: number }) => {
+      updateProject(values);
+    },
+    [updateProject],
+  );
 
   const onClearSelection = useCallback(() => {
     if (selectionDependentTools.includes(activeTool)) setActiveTool('select');
@@ -40,6 +50,7 @@ export const Editor = ({ initialData }: EditorProps) => {
 
   const { init, editor } = useEditor({
     clearSelectionCallback: onClearSelection,
+    saveCallback: debouncedSave,
   });
 
   const onChangeActiveTool = useCallback(
