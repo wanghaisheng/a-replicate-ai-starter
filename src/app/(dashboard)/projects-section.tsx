@@ -8,20 +8,32 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
+import { useDeleteProject } from '@/features/projects/api/use-delete-project';
 import { useDuplicateProject } from '@/features/projects/api/use-duplicate-project';
 import { useGetProjects } from '@/features/projects/api/use-get-projects';
+import { useConfirm } from '@/hooks/use-confirm';
 
 export const ProjectsSection = () => {
   const router = useRouter();
+  const [ConfirmDialog, confirm] = useConfirm('Are you sure?', 'You are about to delete this project.');
 
   const { mutate: duplicateProject, isPending: isDuplicatingProject } = useDuplicateProject();
+  const { mutate: deleteProject, isPending: isDeletingProject } = useDeleteProject();
   const { data, status, fetchNextPage, isFetchingNextPage, hasNextPage } = useGetProjects();
 
   const onCopy = (id: string) => {
     duplicateProject({ id });
   };
 
-  const isPending = isDuplicatingProject;
+  const onDelete = async (id: string) => {
+    const ok = await confirm();
+
+    if (!ok) return;
+
+    deleteProject({ id });
+  };
+
+  const isPending = isDuplicatingProject || isDeletingProject;
 
   if (status === 'pending') {
     return (
@@ -63,6 +75,8 @@ export const ProjectsSection = () => {
 
   return (
     <div className="space-y-4">
+      <ConfirmDialog />
+
       <h3 className="font-semibold text-lg">Recent Projects</h3>
 
       <Table>
@@ -91,8 +105,8 @@ export const ProjectsSection = () => {
 
                   <TableCell className="flex items-center justify-end">
                     <DropdownMenu modal={false}>
-                      <DropdownMenuTrigger asChild>
-                        <Button disabled={isPending} title="More options" size="icon" variant="ghost">
+                      <DropdownMenuTrigger disabled={isPending} asChild>
+                        <Button title="More options" size="icon" variant="ghost">
                           <MoreHorizontal className="size-4" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -103,7 +117,11 @@ export const ProjectsSection = () => {
                           Make a copy
                         </DropdownMenuItem>
 
-                        <DropdownMenuItem disabled={isPending} onClick={() => {}} className="h-10 cursor-pointer text-destructive">
+                        <DropdownMenuItem
+                          disabled={isPending}
+                          onClick={() => onDelete(project.id)}
+                          className="h-10 cursor-pointer text-destructive"
+                        >
                           <Trash className="size-4 mr-2" />
                           Delete
                         </DropdownMenuItem>
