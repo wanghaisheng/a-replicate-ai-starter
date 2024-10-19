@@ -8,6 +8,48 @@ import { db } from '@/db/drizzle';
 import { projects, projectsInsertSchema } from '@/db/schema';
 
 const app = new Hono()
+  .post(
+    '/:id/duplicate',
+    verifyAuth(),
+    zValidator(
+      'param',
+      z.object({
+        id: z.string(),
+      }),
+    ),
+    async (ctx) => {
+      const auth = ctx.get('authUser');
+      const { id } = ctx.req.valid('param');
+
+      if (!auth.token?.id) {
+        return ctx.json('Unauthorized!', 401);
+      }
+
+      const [data] = await db
+        .select()
+        .from(projects)
+        .where(and(eq(projects.id, id), eq(projects.userId, auth.token.id)));
+
+      if (!data) {
+        return ctx.json('Not found.', 404);
+      }
+
+      const [duplicateData] = await db
+        .insert(projects)
+        .values({
+          name: `Copy of ${data.name}`,
+          json: data.json,
+          width: data.width,
+          height: data.height,
+          userId: auth.token.id,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        })
+        .returning();
+
+      return ctx.json({ data, duplicateData });
+    },
+  )
   .get(
     '/',
     verifyAuth(),

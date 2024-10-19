@@ -8,12 +8,20 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
+import { useDuplicateProject } from '@/features/projects/api/use-duplicate-project';
 import { useGetProjects } from '@/features/projects/api/use-get-projects';
 
 export const ProjectsSection = () => {
   const router = useRouter();
 
+  const { mutate: duplicateProject, isPending: isDuplicatingProject } = useDuplicateProject();
   const { data, status, fetchNextPage, isFetchingNextPage, hasNextPage } = useGetProjects();
+
+  const onCopy = (id: string) => {
+    duplicateProject({ id });
+  };
+
+  const isPending = isDuplicatingProject;
 
   if (status === 'pending') {
     return (
@@ -84,18 +92,18 @@ export const ProjectsSection = () => {
                   <TableCell className="flex items-center justify-end">
                     <DropdownMenu modal={false}>
                       <DropdownMenuTrigger asChild>
-                        <Button disabled={false} title="More options" size="icon" variant="ghost">
+                        <Button disabled={isPending} title="More options" size="icon" variant="ghost">
                           <MoreHorizontal className="size-4" />
                         </Button>
                       </DropdownMenuTrigger>
 
                       <DropdownMenuContent align="end" className="w-60">
-                        <DropdownMenuItem disabled={false} onClick={() => {}} className="h-10 cursor-pointer">
+                        <DropdownMenuItem disabled={isPending} onClick={() => onCopy(project.id)} className="h-10 cursor-pointer">
                           <CopyIcon className="size-4 mr-2" />
                           Make a copy
                         </DropdownMenuItem>
 
-                        <DropdownMenuItem disabled={false} onClick={() => {}} className="h-10 cursor-pointer text-destructive">
+                        <DropdownMenuItem disabled={isPending} onClick={() => {}} className="h-10 cursor-pointer text-destructive">
                           <Trash className="size-4 mr-2" />
                           Delete
                         </DropdownMenuItem>
