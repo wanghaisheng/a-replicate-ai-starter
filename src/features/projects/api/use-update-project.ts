@@ -11,6 +11,7 @@ export const useUpdateProject = (id: string) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
+    mutationKey: ['project', id],
     mutationFn: async (json) => {
       const response = await client.api.projects[':id'].$patch({
         json,

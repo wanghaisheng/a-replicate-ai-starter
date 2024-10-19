@@ -39,6 +39,8 @@ export const Editor = ({ initialData }: EditorProps) => {
 
   const debouncedSave = useCallback(
     (values: { json: string; height: number; width: number }) => {
+      // TODO: Add debounce
+
       updateProject(values);
     },
     [updateProject],
@@ -49,6 +51,9 @@ export const Editor = ({ initialData }: EditorProps) => {
   }, [activeTool]);
 
   const { init, editor } = useEditor({
+    defaultState: initialData.json,
+    defaultWidth: initialData.width,
+    defaultHeight: initialData.height,
     clearSelectionCallback: onClearSelection,
     saveCallback: debouncedSave,
   });
@@ -88,7 +93,7 @@ export const Editor = ({ initialData }: EditorProps) => {
 
   return (
     <div className="h-full flex flex-col">
-      <Navbar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
+      <Navbar id={initialData.id} editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
 
       <div className="absolute h-[calc(100%_-_68px)] w-full top-[68px] flex">
         <Sidebar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
