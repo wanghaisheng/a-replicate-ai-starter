@@ -40,6 +40,7 @@
     "fabric": "5.3.0-browser",
     "hono": "^4.6.4",
     "jsdom": "^25.0.1",
+    "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.447.0",
     "material-colors": "^1.2.6",
     "next": "14.2.14",
