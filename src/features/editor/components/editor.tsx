@@ -1,6 +1,7 @@
 'use client';
 
 import { fabric } from 'fabric';
+import debounce from 'lodash.debounce';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useEditor } from '@/features/editor/hooks/use-editor';
@@ -37,12 +38,11 @@ export const Editor = ({ initialData }: EditorProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSave = useCallback(
-    (values: { json: string; height: number; width: number }) => {
-      // TODO: Add debounce
-
+    debounce((values: { json: string; height: number; width: number }) => {
       updateProject(values);
-    },
+    }, 500),
     [updateProject],
   );
 
