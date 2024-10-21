@@ -24,6 +24,7 @@ import { Sidebar } from './sidebar';
 import { StrokeColorSidebar } from './stroke-color-sidebar';
 import { OpacitySidebar } from './stroke-opacity-sidebar';
 import { StrokeWidthSidebar } from './stroke-width-sidebar';
+import { TemplateSidebar } from './template-sidebar';
 import { TextSidebar } from './text-sidebar';
 import { Toolbar } from './toolbar';
 
@@ -110,6 +111,7 @@ export const Editor = ({ initialData }: EditorProps) => {
         <RemoveBgSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
         <DrawSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
         <SettingsSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
+        <TemplateSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
 
         <main className="bg-muted flex-1 overflow-auto relative flex flex-col">
           <Toolbar
