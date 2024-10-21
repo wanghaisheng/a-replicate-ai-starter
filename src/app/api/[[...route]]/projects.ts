@@ -124,7 +124,7 @@ const app = new Hono()
       const data = await db
         .select()
         .from(projects)
-        .where(eq(projects.userId, auth.token.id))
+        .where(and(eq(projects.userId, auth.token.id), eq(projects.isTemplate, false)))
         .limit(limit)
         .offset((page - 1) * limit)
         .orderBy(desc(projects.updatedAt));
