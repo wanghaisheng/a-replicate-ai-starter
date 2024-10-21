@@ -1,6 +1,6 @@
 'use client';
 
-import { CreditCard, Loader2, LogOut } from 'lucide-react';
+import { CreditCard, Crown, Loader2, LogOut } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -11,9 +11,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { usePaywall } from '@/features/subscriptions/hooks/use-paywall';
 
 export const UserButton = () => {
   const session = useSession();
+  const { shouldBlock, isLoading } = usePaywall();
 
   if (session.status === 'loading') {
     return <Loader2 className="size-4 animate-spin text-muted-foreground" />;
@@ -26,8 +28,14 @@ export const UserButton = () => {
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger>
-        {/* TODO: Add crown if user is premium */}
+      <DropdownMenuTrigger className="outline-none relative">
+        {!shouldBlock && !isLoading && (
+          <div className="absolute -top-1 -left-1 z-10 flex items-center justify-center">
+            <div className="rounded-full bg-white flex items-center justify-center p-1 drop-shadow-sm">
+              <Crown className="size-3 text-yellow-500 fill-yellow-500" />
+            </div>
+          </div>
+        )}
 
         <Avatar className="size-10 hover:opacity-75 transition">
           <AvatarImage src={image} alt={name} />
