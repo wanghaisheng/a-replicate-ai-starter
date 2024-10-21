@@ -1,10 +1,13 @@
 'use client';
 
-import { CreditCard, Crown, Home, MessageCircleQuestion } from 'lucide-react';
+import { CreditCard, Crown, Home } from 'lucide-react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { BsGithub } from 'react-icons/bs';
 
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { links } from '@/config';
 import { useBilling } from '@/features/subscriptions/api/use-billing';
 import { usePaywall } from '@/features/subscriptions/hooks/use-paywall';
 
@@ -55,7 +58,13 @@ export const SidebarRoutes = () => {
       <ul className="flex flex-col gap-y-1 px-3">
         {!shouldBlock && <SidebarItem href={pathname} label="Billing" icon={CreditCard} onClick={onClick} />}
 
-        <SidebarItem href="mailto:contact@example.com" label="Get Help" icon={MessageCircleQuestion} />
+        <Link href={links.sourceCode} target="_blank" rel="noreferrer noopener">
+          <div className="flex items-center p-3 rounded-xl bg-transparent hover:bg-white transition">
+            <BsGithub className="size-4 mr-2" />
+
+            <span className="text-sm font-medium">Source Code</span>
+          </div>
+        </Link>
       </ul>
     </div>
   );
