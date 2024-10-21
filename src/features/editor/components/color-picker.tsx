@@ -18,7 +18,7 @@ export const ColorPicker = ({ color, onChange }: ColorPickerProps) => {
 
           onChange(formattedColor);
         }}
-        className="border rounded-lg"
+        className="rounded-lg border"
       />
 
       <CirclePicker

@@ -25,14 +25,14 @@ export const SidebarRoutes = () => {
   };
 
   return (
-    <div className="flex flex-col gap-y-4 flex-1">
+    <div className="flex flex-1 flex-col gap-y-4">
       <div className="px-3">
         {shouldBlock && (
           <>
             <Button
               onClick={triggerPaywall}
               disabled={isLoading}
-              className="w-full rounded-xl border-none hover:bg-white hover:opacity-75 transition"
+              className="w-full rounded-xl border-none transition hover:bg-white hover:opacity-75"
               variant="outline"
               size="lg"
             >
@@ -59,8 +59,8 @@ export const SidebarRoutes = () => {
         {!shouldBlock && <SidebarItem href={pathname} label="Billing" icon={CreditCard} onClick={onClick} />}
 
         <Link href={links.sourceCode} target="_blank" rel="noreferrer noopener">
-          <div className="flex items-center p-3 rounded-xl bg-transparent hover:bg-white transition">
-            <BsGithub className="size-4 mr-2" />
+          <div className="flex items-center rounded-xl bg-transparent p-3 transition hover:bg-white">
+            <BsGithub className="mr-2 size-4" />
 
             <span className="text-sm font-medium">Source Code</span>
           </div>

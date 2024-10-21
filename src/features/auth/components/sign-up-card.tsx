@@ -54,7 +54,7 @@ export const SignUpCard = () => {
       </CardHeader>
 
       {!!error && (
-        <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-destructive mb-6">
+        <div className="mb-6 flex items-center gap-x-2 rounded-md bg-destructive/15 p-3 text-sm text-destructive">
           <TriangleAlert className="size-4" />
           <p>{error.message || 'Something went wrong!'}</p>
         </div>
@@ -85,13 +85,13 @@ export const SignUpCard = () => {
         <Separator />
 
         <div className="flex flex-col gap-y-2.5">
-          <Button disabled={isPending} onClick={() => onProviderSignUp('google')} variant="outline" size="lg" className="w-full relative">
-            <FcGoogle className="size-5 mr-2 top-2.5 left-2.5 absolute" />
+          <Button disabled={isPending} onClick={() => onProviderSignUp('google')} variant="outline" size="lg" className="relative w-full">
+            <FcGoogle className="absolute left-2.5 top-2.5 mr-2 size-5" />
             Continue with Google
           </Button>
 
-          <Button disabled={isPending} onClick={() => onProviderSignUp('github')} variant="outline" size="lg" className="w-full relative">
-            <FaGithub className="size-5 mr-2 top-2.5 left-2.5 absolute" />
+          <Button disabled={isPending} onClick={() => onProviderSignUp('github')} variant="outline" size="lg" className="relative w-full">
+            <FaGithub className="absolute left-2.5 top-2.5 mr-2 size-5" />
             Continue with GitHub
           </Button>
         </div>

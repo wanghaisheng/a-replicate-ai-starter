@@ -51,14 +51,14 @@ export const RemoveBgSidebar = ({ editor, activeTool, onChangeActiveTool }: Remo
 
   return (
     <aside
-      className={cn('bg-white relative border z-40 w-[360px] h-full flex flex-col', activeTool === 'remove-bg' ? 'visible' : 'hidden')}
+      className={cn('relative z-40 flex h-full w-[360px] flex-col border bg-white', activeTool === 'remove-bg' ? 'visible' : 'hidden')}
     >
       <ToolSidebarHeader title="Background Removal" description="Remove background from image using AI." />
 
       {imageSrc ? (
         <ScrollArea>
-          <div className="p-4 space-y-4">
-            <div className={cn('relative aspect-square rounded-md overflow-hidden transition bg-muted', isRemovingBg && 'opacity-50')}>
+          <div className="space-y-4 p-4">
+            <div className={cn('relative aspect-square overflow-hidden rounded-md bg-muted transition', isRemovingBg && 'opacity-50')}>
               <Image src={imageSrc} alt="Selected image" fill className="object-cover" />
             </div>
 
@@ -68,10 +68,10 @@ export const RemoveBgSidebar = ({ editor, activeTool, onChangeActiveTool }: Remo
           </div>
         </ScrollArea>
       ) : (
-        <div className="flex flex-col gap-y-4 items-center justify-center flex-1">
+        <div className="flex flex-1 flex-col items-center justify-center gap-y-4">
           <AlertTriangle className="size-4 text-muted-foreground" />
 
-          <p className="text-muted-foreground text-xs">Feature not available for this object.</p>
+          <p className="text-xs text-muted-foreground">Feature not available for this object.</p>
         </div>
       )}
 

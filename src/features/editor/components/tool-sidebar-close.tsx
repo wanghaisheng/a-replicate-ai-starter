@@ -8,10 +8,10 @@ export const ToolSidebarClose = ({ onClick }: ToolSidebarCloseProps) => {
   return (
     <button
       onClick={onClick}
-      className="absolute -right-[1.8rem] h-[70px] bg-white top-1/2 transform -translate-y-1/2 flex items-center justify-center rounded-r-xl px-1 pr-2 border-r border-y group"
+      className="group absolute -right-[1.8rem] top-1/2 flex h-[70px] -translate-y-1/2 transform items-center justify-center rounded-r-xl border-y border-r bg-white px-1 pr-2"
       title="Close toolbar"
     >
-      <ChevronsLeft className="size-4 text-black group-hover:opacity-75 transition" />
+      <ChevronsLeft className="size-4 text-black transition group-hover:opacity-75" />
     </button>
   );
 };

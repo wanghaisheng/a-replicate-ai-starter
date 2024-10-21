@@ -27,7 +27,7 @@ export const SuccessModal = () => {
           <DialogDescription className="text-center">You have successfully subscribed to our service.</DialogDescription>
         </DialogHeader>
 
-        <DialogFooter className="pt-2 mt-4 gap-y-2">
+        <DialogFooter className="mt-4 gap-y-2 pt-2">
           <Button onClick={handleClose} className="w-full">
             Continue
           </Button>

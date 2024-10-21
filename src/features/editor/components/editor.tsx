@@ -93,10 +93,10 @@ export const Editor = ({ initialData }: EditorProps) => {
   }, [init]);
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="flex h-full flex-col">
       <Navbar id={initialData.id} editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
 
-      <div className="absolute h-[calc(100%_-_68px)] w-full top-[68px] flex">
+      <div className="absolute top-[68px] flex h-[calc(100%_-_68px)] w-full">
         <Sidebar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
         <ShapeSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
         <FillColorSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
@@ -113,7 +113,7 @@ export const Editor = ({ initialData }: EditorProps) => {
         <SettingsSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
         <TemplateSidebar editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
 
-        <main className="bg-muted flex-1 overflow-auto relative flex flex-col">
+        <main className="relative flex flex-1 flex-col overflow-auto bg-muted">
           <Toolbar
             editor={editor}
             activeTool={activeTool}
@@ -121,7 +121,7 @@ export const Editor = ({ initialData }: EditorProps) => {
             key={JSON.stringify(editor?.canvas.getActiveObject())}
           />
 
-          <div className="flex-1 h-[calc(100%_-_124px)] bg-muted" ref={containerRef}>
+          <div className="h-[calc(100%_-_124px)] flex-1 bg-muted" ref={containerRef}>
             <canvas ref={canvasRef} />
           </div>
 

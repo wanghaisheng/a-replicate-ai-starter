@@ -37,20 +37,20 @@ export const TemplateSidebar = ({ editor, activeTool, onChangeActiveTool }: Temp
 
   return (
     <aside
-      className={cn('bg-white relative border z-40 w-[360px] h-full flex flex-col', activeTool === 'templates' ? 'visible' : 'hidden')}
+      className={cn('relative z-40 flex h-full w-[360px] flex-col border bg-white', activeTool === 'templates' ? 'visible' : 'hidden')}
     >
       <ConfirmDialog />
 
       <ToolSidebarHeader title="Templates" description="Choose from a variety of templates to get started." />
 
       {isLoading && (
-        <div className="flex items-center justify-center flex-1">
-          <Loader2 className="size-4 text-muted-foreground animate-spin" />
+        <div className="flex flex-1 items-center justify-center">
+          <Loader2 className="size-4 animate-spin text-muted-foreground" />
         </div>
       )}
 
       {isError && (
-        <div className="flex flex-col gap-y-4 items-center justify-center flex-1">
+        <div className="flex flex-1 flex-col items-center justify-center gap-y-4">
           <AlertTriangle className="size-4 text-muted-foreground" />
           <p className="text-xs text-muted-foreground">Failed to fetch templates.</p>
         </div>
@@ -68,17 +68,17 @@ export const TemplateSidebar = ({ editor, activeTool, onChangeActiveTool }: Temp
                     style={{
                       aspectRatio: `${template.width} / ${template.height}`,
                     }}
-                    className="relative w-full group hover:opacity-75 transition bg-muted rounded-sm overflow-hidden border"
+                    className="group relative w-full overflow-hidden rounded-sm border bg-muted transition hover:opacity-75"
                   >
                     <Image fill src={template.thumbnailUrl || ''} alt={template.name} className="object-cover" />
 
                     {template.isPro && (
-                      <div className="absolute top-2 right-2 size-8 flex items-center justify-center bg-black/50 rounded-full shadow-md z-10">
+                      <div className="absolute right-2 top-2 z-10 flex size-8 items-center justify-center rounded-full bg-black/50 shadow-md">
                         <Crown className="size-4 fill-yellow-500 text-yellow-500" />
                       </div>
                     )}
 
-                    <div className="opacity-0 group-hover:opacity-100 absolute left-0 bottom-0 w-full text-[10px] truncate text-white p-1 bg-black/50 text-left">
+                    <div className="absolute bottom-0 left-0 w-full truncate bg-black/50 p-1 text-left text-[10px] text-white opacity-0 group-hover:opacity-100">
                       {template.name}
                     </div>
                   </button>

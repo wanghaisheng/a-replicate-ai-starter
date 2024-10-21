@@ -53,15 +53,15 @@ export const Navbar = ({ id, editor, activeTool, onChangeActiveTool }: NavbarPro
   });
 
   return (
-    <nav className="w-full flex items-center p-4 h-[68px] gap-x-8 border-b lg:pl-[34px]">
+    <nav className="flex h-[68px] w-full items-center gap-x-8 border-b p-4 lg:pl-[34px]">
       <Logo />
 
-      <div className="w-full flex items-center gap-x-1 h-full">
+      <div className="flex h-full w-full items-center gap-x-1">
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button size="sm" variant="ghost">
               File
-              <ChevronDown className="size-4 ml-2" />
+              <ChevronDown className="ml-2 size-4" />
             </Button>
           </DropdownMenuTrigger>
 
@@ -128,7 +128,7 @@ export const Navbar = ({ id, editor, activeTool, onChangeActiveTool }: NavbarPro
             <DropdownMenuTrigger asChild>
               <Button size="sm" variant="ghost">
                 Export
-                <Download className="size-4 ml-2" />
+                <Download className="ml-2 size-4" />
               </Button>
             </DropdownMenuTrigger>
 

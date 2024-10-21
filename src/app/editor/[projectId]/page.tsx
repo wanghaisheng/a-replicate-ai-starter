@@ -18,7 +18,7 @@ const EditorProjectIdPage = ({ params }: EditorProjectIdPageProps) => {
 
   if (isLoading || !data) {
     return (
-      <div className="h-full flex flex-col items-center justify-center">
+      <div className="flex h-full flex-col items-center justify-center">
         <Loader2 className="size-6 animate-spin text-muted-foreground" />
       </div>
     );
@@ -26,9 +26,9 @@ const EditorProjectIdPage = ({ params }: EditorProjectIdPageProps) => {
 
   if (isError) {
     return (
-      <div className="h-full flex flex-col gap-y-5 items-center justify-center">
+      <div className="flex h-full flex-col items-center justify-center gap-y-5">
         <TriangleAlert className="size-6 text-muted-foreground" />
-        <p className="text-muted-foreground text-sm">Failed to fetch project.</p>
+        <p className="text-sm text-muted-foreground">Failed to fetch project.</p>
 
         <Button size="sm" variant="secondary" asChild>
           <Link href="/">Back to home</Link>

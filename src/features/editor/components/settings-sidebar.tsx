@@ -53,7 +53,7 @@ export const SettingsSidebar = ({ editor, activeTool, onChangeActiveTool }: Sett
   const onClose = () => onChangeActiveTool('select');
 
   return (
-    <aside className={cn('bg-white relative border z-40 w-[360px] h-full flex flex-col', activeTool === 'settings' ? 'visible' : 'hidden')}>
+    <aside className={cn('relative z-40 flex h-full w-[360px] flex-col border bg-white', activeTool === 'settings' ? 'visible' : 'hidden')}>
       <ToolSidebarHeader title="Settings" description="Change the look of your workspace." />
 
       <ScrollArea>
@@ -72,7 +72,7 @@ export const SettingsSidebar = ({ editor, activeTool, onChangeActiveTool }: Sett
           </Button>
         </form>
 
-        <div className="p-4 border-t">
+        <div className="border-t p-4">
           <ColorPicker
             color={background as string} // Gradients and patterns are not passed.
             onChange={changeBackground}

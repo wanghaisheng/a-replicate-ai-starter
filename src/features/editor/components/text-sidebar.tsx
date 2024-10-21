@@ -16,17 +16,17 @@ export const TextSidebar = ({ editor, activeTool, onChangeActiveTool }: TextSide
   const onClose = () => onChangeActiveTool('select');
 
   return (
-    <aside className={cn('bg-white relative border z-40 w-[360px] h-full flex flex-col', activeTool === 'text' ? 'visible' : 'hidden')}>
+    <aside className={cn('relative z-40 flex h-full w-[360px] flex-col border bg-white', activeTool === 'text' ? 'visible' : 'hidden')}>
       <ToolSidebarHeader title="Text" description="Add text to your canvas." />
 
       <ScrollArea>
-        <div className="p-4 space-y-4 border-b">
+        <div className="space-y-4 border-b p-4">
           <Button className="w-full" onClick={() => editor?.addText('Textbox')}>
             Add a textbox
           </Button>
 
           <Button
-            className="w-full h-16"
+            className="h-16 w-full"
             variant="secondary"
             size="lg"
             onClick={() =>
@@ -40,7 +40,7 @@ export const TextSidebar = ({ editor, activeTool, onChangeActiveTool }: TextSide
           </Button>
 
           <Button
-            className="w-full h-16"
+            className="h-16 w-full"
             variant="secondary"
             size="lg"
             onClick={() =>

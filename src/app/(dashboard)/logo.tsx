@@ -12,8 +12,8 @@ const font = Space_Grotesk({
 export const Logo = () => {
   return (
     <Link href="/">
-      <div className="flex items-center gap-x-2 hover:opacity-75 transition h-[68px] px-4">
-        <div className="size-8 relative">
+      <div className="flex h-[68px] items-center gap-x-2 px-4 transition hover:opacity-75">
+        <div className="relative size-8">
           <Image src="/logo.svg" alt="Image AI" fill />
         </div>
 

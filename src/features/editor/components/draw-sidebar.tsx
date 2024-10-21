@@ -32,17 +32,17 @@ export const DrawSidebar = ({ editor, activeTool, onChangeActiveTool }: DrawSide
   };
 
   return (
-    <aside className={cn('bg-white relative border z-40 w-[360px] h-full flex flex-col', activeTool === 'draw' ? 'visible' : 'hidden')}>
+    <aside className={cn('relative z-40 flex h-full w-[360px] flex-col border bg-white', activeTool === 'draw' ? 'visible' : 'hidden')}>
       <ToolSidebarHeader title="Drawing mode" description="Modify brush settings." />
 
       <ScrollArea>
-        <div className="p-4 space-y-6 border-b">
+        <div className="space-y-6 border-b p-4">
           <Label className="text-sm">Brush width</Label>
 
           <Slider value={[width]} onValueChange={(values) => onWidthChange(values[0])} />
         </div>
 
-        <div className="p-4 space-y-6">
+        <div className="space-y-6 p-4">
           <ColorPicker color={color} onChange={onColorChange} />
         </div>
       </ScrollArea>

@@ -16,17 +16,17 @@ export const FilterSidebar = ({ editor, activeTool, onChangeActiveTool }: Filter
   const onClose = () => onChangeActiveTool('select');
 
   return (
-    <aside className={cn('bg-white relative border z-40 w-[360px] h-full flex flex-col', activeTool === 'filter' ? 'visible' : 'hidden')}>
+    <aside className={cn('relative z-40 flex h-full w-[360px] flex-col border bg-white', activeTool === 'filter' ? 'visible' : 'hidden')}>
       <ToolSidebarHeader title="Filters" description="Apply a filter to selected image." />
 
       <ScrollArea>
-        <div className="p-4 space-y-2 border-b">
+        <div className="space-y-2 border-b p-4">
           {filters.map((filter) => (
             <Button
               key={filter}
               variant="outline"
               size="lg"
-              className="w-full h-14 justify-start text-left"
+              className="h-14 w-full justify-start text-left"
               onClick={() => editor?.changeImageFilter(filter)}
             >
               {filter}

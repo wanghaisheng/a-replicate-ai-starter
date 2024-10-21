@@ -20,7 +20,7 @@ export const FontSizeInput = ({ value, onChange }: FontSizeInputProps) => {
 
   return (
     <div className="flex items-center">
-      <Button disabled={value <= 1} onClick={decrement} variant="outline" className="p-2 rounded-r-none border-r-0" size="icon">
+      <Button disabled={value <= 1} onClick={decrement} variant="outline" className="rounded-r-none border-r-0 p-2" size="icon">
         <Minus className="size-4" />
       </Button>
 
@@ -30,10 +30,10 @@ export const FontSizeInput = ({ value, onChange }: FontSizeInputProps) => {
         max={100}
         onChange={handleChange}
         value={value}
-        className="w-[50px] h-8 focus-visible:ring-offset-0 focus-visible:ring-0 rounded-none"
+        className="h-8 w-[50px] rounded-none focus-visible:ring-0 focus-visible:ring-offset-0"
       />
 
-      <Button disabled={value >= 100} onClick={increment} variant="outline" className="p-2 rounded-l-none border-l-0" size="icon">
+      <Button disabled={value >= 100} onClick={increment} variant="outline" className="rounded-l-none border-l-0 p-2" size="icon">
         <Plus className="size-4" />
       </Button>
     </div>

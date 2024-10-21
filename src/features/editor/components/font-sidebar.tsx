@@ -18,17 +18,17 @@ export const FontSidebar = ({ editor, activeTool, onChangeActiveTool }: FontSide
   const onClose = () => onChangeActiveTool('select');
 
   return (
-    <aside className={cn('bg-white relative border z-40 w-[360px] h-full flex flex-col', activeTool === 'font' ? 'visible' : 'hidden')}>
+    <aside className={cn('relative z-40 flex h-full w-[360px] flex-col border bg-white', activeTool === 'font' ? 'visible' : 'hidden')}>
       <ToolSidebarHeader title="Font" description="Modify the text font." />
 
       <ScrollArea>
-        <div className="p-4 space-y-2 border-b">
+        <div className="space-y-2 border-b p-4">
           {fonts.map((font) => (
             <Button
               key={font}
               variant={fontFamily === font ? 'secondary' : 'outline'}
               size="lg"
-              className="w-full h-14 justify-start text-left"
+              className="h-14 w-full justify-start text-left"
               style={{
                 fontFamily: font,
                 fontSize: '16px',

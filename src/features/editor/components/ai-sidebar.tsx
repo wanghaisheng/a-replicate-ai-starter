@@ -47,11 +47,11 @@ export const AiSidebar = ({ editor, activeTool, onChangeActiveTool }: AiSidebarP
   };
 
   return (
-    <aside className={cn('bg-white relative border z-40 w-[360px] h-full flex flex-col', activeTool === 'ai' ? 'visible' : 'hidden')}>
+    <aside className={cn('relative z-40 flex h-full w-[360px] flex-col border bg-white', activeTool === 'ai' ? 'visible' : 'hidden')}>
       <ToolSidebarHeader title="AI" description="Generate an image using AI." />
 
       <ScrollArea>
-        <form className="p-4 space-y-6" onSubmit={onSubmit}>
+        <form className="space-y-6 p-4" onSubmit={onSubmit}>
           <Textarea
             disabled={isGeneratingImage}
             value={prompt}

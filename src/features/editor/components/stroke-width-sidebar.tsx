@@ -30,42 +30,42 @@ export const StrokeWidthSidebar = ({ editor, activeTool, onChangeActiveTool }: S
 
   return (
     <aside
-      className={cn('bg-white relative border z-40 w-[360px] h-full flex flex-col', activeTool === 'stroke-width' ? 'visible' : 'hidden')}
+      className={cn('relative z-40 flex h-full w-[360px] flex-col border bg-white', activeTool === 'stroke-width' ? 'visible' : 'hidden')}
     >
       <ToolSidebarHeader title="Stroke options" description="Modify the stroke of your element." />
 
       <ScrollArea>
-        <div className="p-4 space-y-4 border-b">
+        <div className="space-y-4 border-b p-4">
           <Label className="text-sm">Stroke width</Label>
 
           <Slider value={[width]} onValueChange={(values) => onChange(values[0])} />
         </div>
 
-        <div className="p-4 space-y-4 border-b">
+        <div className="space-y-4 border-b p-4">
           <Label className="text-sm">Stroke type</Label>
 
           <Button
             onClick={() => onChangeStrokeType(STROKE_DASH_ARRAY)}
             variant={JSON.stringify(type) === JSON.stringify(STROKE_DASH_ARRAY) ? 'secondary' : 'outline'}
             size="lg"
-            className="w-full h-16 justify-start text-left"
+            className="h-16 w-full justify-start text-left"
             style={{
               padding: '8px 16px',
             }}
           >
-            <div aria-hidden className="w-full border-black rounded-full border-4" />
+            <div aria-hidden className="w-full rounded-full border-4 border-black" />
           </Button>
 
           <Button
             onClick={() => onChangeStrokeType([5, 5])}
             variant={JSON.stringify(type) === JSON.stringify([5, 5]) ? 'secondary' : 'outline'}
             size="lg"
-            className="w-full h-16 justify-start text-left"
+            className="h-16 w-full justify-start text-left"
             style={{
               padding: '8px 16px',
             }}
           >
-            <div aria-hidden className="w-full border-black rounded-full border-4 border-dashed" />
+            <div aria-hidden className="w-full rounded-full border-4 border-dashed border-black" />
           </Button>
         </div>
       </ScrollArea>

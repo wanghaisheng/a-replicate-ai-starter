@@ -20,7 +20,7 @@ export const ShapeSidebar = ({ editor, activeTool, onChangeActiveTool }: ShapeSi
   const onClose = () => onChangeActiveTool('select');
 
   return (
-    <aside className={cn('bg-white relative border z-40 w-[360px] h-full flex flex-col', activeTool === 'shapes' ? 'visible' : 'hidden')}>
+    <aside className={cn('relative z-40 flex h-full w-[360px] flex-col border bg-white', activeTool === 'shapes' ? 'visible' : 'hidden')}>
       <ToolSidebarHeader title="Shapes" description="Add shapes to your canvas." />
 
       <ScrollArea>

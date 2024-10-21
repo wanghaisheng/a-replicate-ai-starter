@@ -24,10 +24,10 @@ export const ImageSidebar = ({ editor, activeTool, onChangeActiveTool }: ImageSi
   const onClose = () => onChangeActiveTool('select');
 
   return (
-    <aside className={cn('bg-white relative border z-40 w-[360px] h-full flex flex-col', activeTool === 'images' ? 'visible' : 'hidden')}>
+    <aside className={cn('relative z-40 flex h-full w-[360px] flex-col border bg-white', activeTool === 'images' ? 'visible' : 'hidden')}>
       <ToolSidebarHeader title="Images" description="Add images to your canvas." />
 
-      <div className="p-4 border-b">
+      <div className="border-b p-4">
         <UploadButton
           appearance={{
             button: 'w-full text-sm font-medium',
@@ -54,13 +54,13 @@ export const ImageSidebar = ({ editor, activeTool, onChangeActiveTool }: ImageSi
       </div>
 
       {isLoading && (
-        <div className="flex items-center justify-center flex-1">
-          <Loader2 className="size-4 text-muted-foreground animate-spin" />
+        <div className="flex flex-1 items-center justify-center">
+          <Loader2 className="size-4 animate-spin text-muted-foreground" />
         </div>
       )}
 
       {isError && (
-        <div className="flex flex-col gap-y-4 items-center justify-center flex-1">
+        <div className="flex flex-1 flex-col items-center justify-center gap-y-4">
           <AlertTriangle className="size-4 text-muted-foreground" />
           <p className="text-xs text-muted-foreground">Failed to fetch images.</p>
         </div>
@@ -75,14 +75,14 @@ export const ImageSidebar = ({ editor, activeTool, onChangeActiveTool }: ImageSi
                   <button
                     key={image.id}
                     onClick={() => editor?.addImage(image.urls.regular)}
-                    className="relative w-full h-[100px] group hover:opacity-75 transition bg-muted rounded-sm overflow-hidden border"
+                    className="group relative h-[100px] w-full overflow-hidden rounded-sm border bg-muted transition hover:opacity-75"
                   >
                     <Image fill src={image.urls.small} alt={image.alt_description || 'Image from unsplash'} className="object-cover" />
 
                     <Link
                       href={image.links.html}
                       target="_blank"
-                      className="opacity-0 group-hover:opacity-100 absolute left-0 bottom-0 w-full text-[10px] truncate text-white hover:underline p-1 bg-black/50 text-left"
+                      className="absolute bottom-0 left-0 w-full truncate bg-black/50 p-1 text-left text-[10px] text-white opacity-0 hover:underline group-hover:opacity-100"
                     >
                       {image.user.name}
                     </Link>

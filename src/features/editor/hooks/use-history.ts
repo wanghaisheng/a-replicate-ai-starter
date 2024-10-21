@@ -40,7 +40,7 @@ export const useHistory = ({ canvas, saveCallback }: UseHistoryProps) => {
 
       saveCallback?.({ json, height, width });
     },
-    [canvas],
+    [canvas, saveCallback],
   );
 
   const undo = useCallback(() => {

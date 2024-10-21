@@ -38,9 +38,9 @@ export const ProjectsSection = () => {
   if (status === 'pending') {
     return (
       <div className="space-y-4">
-        <h3 className="font-semibold text-lg">Recent Projects</h3>
+        <h3 className="text-lg font-semibold">Recent Projects</h3>
 
-        <div className="flex flex-col gap-y-4 items-center justify-center h-32">
+        <div className="flex h-32 flex-col items-center justify-center gap-y-4">
           <Loader2 className="size-6 animate-spin text-muted-foreground" />
         </div>
       </div>
@@ -50,11 +50,11 @@ export const ProjectsSection = () => {
   if (status === 'error') {
     return (
       <div className="space-y-4">
-        <h3 className="font-semibold text-lg">Recent Projects</h3>
+        <h3 className="text-lg font-semibold">Recent Projects</h3>
 
-        <div className="flex flex-col gap-y-4 items-center justify-center h-32">
+        <div className="flex h-32 flex-col items-center justify-center gap-y-4">
           <AlertTriangle className="size-6 text-muted-foreground" />
-          <p className="text-muted-foreground text-sm">Failed to load projects.</p>
+          <p className="text-sm text-muted-foreground">Failed to load projects.</p>
         </div>
       </div>
     );
@@ -63,11 +63,11 @@ export const ProjectsSection = () => {
   if (!data.pages.length || !data.pages[0].data.length) {
     return (
       <div className="space-y-4">
-        <h3 className="font-semibold text-lg">Recent Projects</h3>
+        <h3 className="text-lg font-semibold">Recent Projects</h3>
 
-        <div className="flex flex-col gap-y-4 items-center justify-center h-32">
+        <div className="flex h-32 flex-col items-center justify-center gap-y-4">
           <Search className="size-6 text-muted-foreground" />
-          <p className="text-muted-foreground text-sm">No projects found.</p>
+          <p className="text-sm text-muted-foreground">No projects found.</p>
         </div>
       </div>
     );
@@ -77,7 +77,7 @@ export const ProjectsSection = () => {
     <div className="space-y-4">
       <ConfirmDialog />
 
-      <h3 className="font-semibold text-lg">Recent Projects</h3>
+      <h3 className="text-lg font-semibold">Recent Projects</h3>
 
       <Table>
         <TableBody>
@@ -87,17 +87,17 @@ export const ProjectsSection = () => {
                 <TableRow key={project.id}>
                   <TableCell
                     onClick={() => router.push(`/editor/${project.id}`)}
-                    className="font-medium flex items-center gap-x-2 cursor-pointer"
+                    className="flex cursor-pointer items-center gap-x-2 font-medium"
                   >
                     <FileIcon className="size-6" />
                     {project.name}
                   </TableCell>
 
-                  <TableCell onClick={() => router.push(`/editor/${project.id}`)} className="hidden md:table-cell cursor-pointer">
+                  <TableCell onClick={() => router.push(`/editor/${project.id}`)} className="hidden cursor-pointer md:table-cell">
                     {project.width} x {project.height} px
                   </TableCell>
 
-                  <TableCell onClick={() => router.push(`/editor/${project.id}`)} className="hidden md:table-cell cursor-pointer">
+                  <TableCell onClick={() => router.push(`/editor/${project.id}`)} className="hidden cursor-pointer md:table-cell">
                     {formatDistanceToNow(project.updatedAt, {
                       addSuffix: true,
                     })}
@@ -113,7 +113,7 @@ export const ProjectsSection = () => {
 
                       <DropdownMenuContent align="end" className="w-60">
                         <DropdownMenuItem disabled={isPending} onClick={() => onCopy(project.id)} className="h-10 cursor-pointer">
-                          <CopyIcon className="size-4 mr-2" />
+                          <CopyIcon className="mr-2 size-4" />
                           Make a copy
                         </DropdownMenuItem>
 
@@ -122,7 +122,7 @@ export const ProjectsSection = () => {
                           onClick={() => onDelete(project.id)}
                           className="h-10 cursor-pointer text-destructive"
                         >
-                          <Trash className="size-4 mr-2" />
+                          <Trash className="mr-2 size-4" />
                           Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -136,7 +136,7 @@ export const ProjectsSection = () => {
       </Table>
 
       {hasNextPage && (
-        <div className="w-full flex items-center justify-center pt-4">
+        <div className="flex w-full items-center justify-center pt-4">
           <Button variant="ghost" onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
             Load more
           </Button>

@@ -15,9 +15,9 @@ export const SidebarItem = ({ icon: Icon, label, onClick, isActive }: SidebarIte
     <Button
       variant="ghost"
       onClick={onClick}
-      className={cn('size-full aspect-video p-3 py-4 flex flex-col rounded-none', isActive && 'bg-muted text-primary')}
+      className={cn('flex aspect-video size-full flex-col rounded-none p-3 py-4', isActive && 'bg-muted text-primary')}
     >
-      <Icon className="size-5 stroke-2 shrink-0" />
+      <Icon className="size-5 shrink-0 stroke-2" />
 
       <span className="mt-2 text-xs">{label}</span>
     </Button>

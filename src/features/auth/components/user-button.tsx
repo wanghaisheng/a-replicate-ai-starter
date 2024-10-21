@@ -36,16 +36,16 @@ export const UserButton = () => {
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger className="outline-none relative">
+      <DropdownMenuTrigger className="relative outline-none">
         {!shouldBlock && !isLoading && (
-          <div className="absolute -top-1 -left-1 z-10 flex items-center justify-center">
-            <div className="rounded-full bg-white flex items-center justify-center p-1 drop-shadow-sm">
-              <Crown className="size-3 text-yellow-500 fill-yellow-500" />
+          <div className="absolute -left-1 -top-1 z-10 flex items-center justify-center">
+            <div className="flex items-center justify-center rounded-full bg-white p-1 drop-shadow-sm">
+              <Crown className="size-3 fill-yellow-500 text-yellow-500" />
             </div>
           </div>
         )}
 
-        <Avatar className="size-10 hover:opacity-75 transition">
+        <Avatar className="size-10 transition hover:opacity-75">
           <AvatarImage src={image} alt={name} />
 
           <AvatarFallback className="bg-blue-500 font-medium text-white">{name.charAt(0).toUpperCase()}</AvatarFallback>
@@ -56,7 +56,7 @@ export const UserButton = () => {
         {!shouldBlock && !isLoading && (
           <>
             <DropdownMenuItem disabled={isPendingBilling} onClick={onClick} className="h-10">
-              <CreditCard className="size-4 mr-2" />
+              <CreditCard className="mr-2 size-4" />
               Billing
             </DropdownMenuItem>
 
@@ -65,7 +65,7 @@ export const UserButton = () => {
         )}
 
         <DropdownMenuItem disabled={isPendingBilling} onClick={() => signOut()} className="h-10">
-          <LogOut className="size-4 mr-2" />
+          <LogOut className="mr-2 size-4" />
           Logout
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -19,30 +19,30 @@ export const TemplateCard = ({ imageSrc, title, onClick, disabled, description, 
     <button
       onClick={onClick}
       disabled={disabled}
-      className={cn('space-y-2 group text-left transition flex flex-col', disabled ? 'cursor-not-allowed opacity-75' : 'cursor-pointer')}
+      className={cn('group flex flex-col space-y-2 text-left transition', disabled ? 'cursor-not-allowed opacity-75' : 'cursor-pointer')}
     >
       <div
         style={{
           aspectRatio: `${width} / ${height}`,
         }}
-        className="relative rounded-xl size-full overflow-hidden border"
+        className="relative size-full overflow-hidden rounded-xl border"
       >
-        <Image src={imageSrc} alt={title} className="object-cover transition transform group-hover:scale-105" fill />
+        <Image src={imageSrc} alt={title} className="transform object-cover transition group-hover:scale-105" fill />
 
         {isPro && (
-          <div className="absolute top-2 right-2 size-10 flex items-center justify-center bg-black/50 rounded-full shadow-md z-10">
+          <div className="absolute right-2 top-2 z-10 flex size-10 items-center justify-center rounded-full bg-black/50 shadow-md">
             <Crown className="size-5 fill-yellow-500 text-yellow-500" />
           </div>
         )}
 
-        <div className="opacity-0 group-hover:opacity-100 transition absolute inset-0 bg-black/50 flex items-center justify-center rounded-xl backdrop-filter backdrop-blur-sm">
-          <p className="text-white font-medium">Open in editor</p>
+        <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-black/50 opacity-0 backdrop-blur-sm backdrop-filter transition group-hover:opacity-100">
+          <p className="font-medium text-white">Open in editor</p>
         </div>
       </div>
 
       <div className="space-y-1">
         <p className="text-sm font-medium">{title}</p>
-        <p className="text-xs text-muted-foreground opacity-0 group-hover:opacity-75 transition">{description}</p>
+        <p className="text-xs text-muted-foreground opacity-0 transition group-hover:opacity-75">{description}</p>
       </div>
     </button>
   );

@@ -23,12 +23,12 @@ export const StrokeColorSidebar = ({ editor, activeTool, onChangeActiveTool }: S
 
   return (
     <aside
-      className={cn('bg-white relative border z-40 w-[360px] h-full flex flex-col', activeTool === 'stroke-color' ? 'visible' : 'hidden')}
+      className={cn('relative z-40 flex h-full w-[360px] flex-col border bg-white', activeTool === 'stroke-color' ? 'visible' : 'hidden')}
     >
       <ToolSidebarHeader title="Stroke color" description="Add stroke color to your element." />
 
       <ScrollArea>
-        <div className="p-4 space-y-6">
+        <div className="space-y-6 p-4">
           <ColorPicker color={color} onChange={onChange} />
         </div>
       </ScrollArea>

@@ -27,33 +27,33 @@ export const SubscriptionModal = () => {
 
         <Separator />
 
-        <ul className="space-y-2 grid grid-cols-1 md:grid-cols-2">
+        <ul className="grid grid-cols-1 space-y-2 md:grid-cols-2">
           <li className="flex items-center">
-            <CheckCircle2 className="size-5 mr-2 fill-blue-500 text-white" />
+            <CheckCircle2 className="mr-2 size-5 fill-blue-500 text-white" />
 
             <p className="text-sm text-muted-foreground">Unlimited projects</p>
           </li>
 
           <li className="flex items-center">
-            <CheckCircle2 className="size-5 mr-2 fill-blue-500 text-white" />
+            <CheckCircle2 className="mr-2 size-5 fill-blue-500 text-white" />
 
             <p className="text-sm text-muted-foreground">Unlimited templates</p>
           </li>
 
           <li className="flex items-center">
-            <CheckCircle2 className="size-5 mr-2 fill-blue-500 text-white" />
+            <CheckCircle2 className="mr-2 size-5 fill-blue-500 text-white" />
 
             <p className="text-sm text-muted-foreground">AI Background removal</p>
           </li>
 
           <li className="flex items-center">
-            <CheckCircle2 className="size-5 mr-2 fill-blue-500 text-white" />
+            <CheckCircle2 className="mr-2 size-5 fill-blue-500 text-white" />
 
             <p className="text-sm text-muted-foreground">AI Image generation</p>
           </li>
         </ul>
 
-        <DialogFooter className="pt-2 mt-4 gap-y-2">
+        <DialogFooter className="mt-4 gap-y-2 pt-2">
           <Button onClick={() => checkout()} className="w-full" disabled={isPending}>
             Upgrade
           </Button>

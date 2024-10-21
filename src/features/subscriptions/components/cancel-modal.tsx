@@ -27,7 +27,7 @@ export const CancelModal = () => {
           <DialogDescription className="text-center">We could not process your payment.</DialogDescription>
         </DialogHeader>
 
-        <DialogFooter className="pt-2 mt-4 gap-y-2">
+        <DialogFooter className="mt-4 gap-y-2 pt-2">
           <Button onClick={handleClose} className="w-full">
             Continue
           </Button>
