@@ -31,7 +31,6 @@ import { useClipboard } from './use-clipboard';
 import { useHistory } from './use-history';
 import { useHotkeys } from './use-hotkeys';
 import { useLoadState } from './use-load-state';
-import { useWindowEvents } from './use-window-events';
 
 const buildEditor = ({
   save,
@@ -613,8 +612,6 @@ export const useEditor = ({ defaultState, defaultWidth, defaultHeight, clearSele
     canvas,
     container,
   });
-
-  useWindowEvents();
 
   useCanvasEvents({
     canvas,

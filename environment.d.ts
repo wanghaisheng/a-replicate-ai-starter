@@ -15,6 +15,10 @@ declare global {
 
       // postgres neon db url
       DATABASE_URL: string;
+
+      // stripe secret key
+      STRIPE_SECRET_KEY: string;
+      STRIPE_PRICE_ID: string;
     }
   }
 }

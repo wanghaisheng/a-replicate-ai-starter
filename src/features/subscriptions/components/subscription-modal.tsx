@@ -2,17 +2,20 @@
 
 import { CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
+import { useCheckout } from '@/features/subscriptions/api/use-checkout';
 import { useSubscriptionModal } from '@/features/subscriptions/store/use-subscription-modal';
 
 export const SubscriptionModal = () => {
   const { isOpen, onClose } = useSubscriptionModal();
+  const { mutate: checkout, isPending } = useCheckout();
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen || isPending} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader className="flex items-center space-y-4">
           <Image src="/logo.svg" alt="Image AI" width={36} height={36} />
@@ -51,7 +54,7 @@ export const SubscriptionModal = () => {
         </ul>
 
         <DialogFooter className="pt-2 mt-4 gap-y-2">
-          <Button onClick={() => {}} className="w-full" disabled={false}>
+          <Button onClick={() => checkout()} className="w-full" disabled={isPending}>
             Upgrade
           </Button>
         </DialogFooter>
