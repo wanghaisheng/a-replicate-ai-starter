@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
+import { CancelModal } from '@/features/subscriptions/components/cancel-modal';
 import { SubscriptionModal } from '@/features/subscriptions/components/subscription-modal';
+import { SuccessModal } from '@/features/subscriptions/components/success-modal';
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -15,7 +17,9 @@ export const ModalProvider = () => {
 
   return (
     <>
+      <CancelModal />
       <SubscriptionModal />
+      <SuccessModal />
     </>
   );
 };

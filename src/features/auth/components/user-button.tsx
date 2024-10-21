@@ -11,11 +11,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useBilling } from '@/features/subscriptions/api/use-billing';
 import { usePaywall } from '@/features/subscriptions/hooks/use-paywall';
 
 export const UserButton = () => {
   const session = useSession();
-  const { shouldBlock, isLoading } = usePaywall();
+  const { mutate: checkoutBilling, isPending: isPendingBilling } = useBilling();
+  const { shouldBlock, triggerPaywall, isLoading } = usePaywall();
+
+  const onClick = () => {
+    if (shouldBlock) return triggerPaywall();
+
+    checkoutBilling();
+  };
 
   if (session.status === 'loading') {
     return <Loader2 className="size-4 animate-spin text-muted-foreground" />;
@@ -45,14 +53,18 @@ export const UserButton = () => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-60">
-        <DropdownMenuItem disabled={false} onClick={() => {}} className="h-10">
-          <CreditCard className="size-4 mr-2" />
-          Billing
-        </DropdownMenuItem>
+        {!shouldBlock && !isLoading && (
+          <>
+            <DropdownMenuItem disabled={isPendingBilling} onClick={onClick} className="h-10">
+              <CreditCard className="size-4 mr-2" />
+              Billing
+            </DropdownMenuItem>
 
-        <DropdownMenuSeparator />
+            <DropdownMenuSeparator />
+          </>
+        )}
 
-        <DropdownMenuItem disabled={false} onClick={() => signOut()} className="h-10">
+        <DropdownMenuItem disabled={isPendingBilling} onClick={() => signOut()} className="h-10">
           <LogOut className="size-4 mr-2" />
           Logout
         </DropdownMenuItem>

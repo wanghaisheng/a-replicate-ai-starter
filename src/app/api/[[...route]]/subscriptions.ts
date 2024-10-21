@@ -9,6 +9,30 @@ import { checkIsActive } from '@/features/subscriptions/utils';
 import { stripe } from '@/lib/stripe';
 
 const app = new Hono()
+  .post('/billing', verifyAuth(), async (ctx) => {
+    const auth = ctx.get('authUser');
+
+    if (!auth.token?.id || !auth.token?.email) {
+      return ctx.json('Unauthorized!', 401);
+    }
+
+    const [subscription] = await db.select().from(subscriptions).where(eq(subscriptions.userId, auth.token.id));
+
+    if (!subscription) {
+      return ctx.json('No subscription found.', 404);
+    }
+
+    const session = await stripe.billingPortal.sessions.create({
+      customer: subscription.customerId,
+      return_url: process.env.NEXT_PUBLIC_APP_BASE_URL!,
+    });
+
+    if (!session.url) {
+      return ctx.json('Failed to create session!', 400);
+    }
+
+    return ctx.json(session.url);
+  })
   .get('/current', verifyAuth(), async (ctx) => {
     const auth = ctx.get('authUser');
 

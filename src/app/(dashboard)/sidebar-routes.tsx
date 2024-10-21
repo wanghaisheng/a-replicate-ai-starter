@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { useBilling } from '@/features/subscriptions/api/use-billing';
 import { usePaywall } from '@/features/subscriptions/hooks/use-paywall';
 
 import { SidebarItem } from './sidebar-item';
@@ -12,6 +13,13 @@ import { SidebarItem } from './sidebar-item';
 export const SidebarRoutes = () => {
   const pathname = usePathname();
   const { shouldBlock, triggerPaywall, isLoading } = usePaywall();
+  const { mutate: checkoutBilling } = useBilling();
+
+  const onClick = () => {
+    if (shouldBlock) return triggerPaywall();
+
+    checkoutBilling();
+  };
 
   return (
     <div className="flex flex-col gap-y-4 flex-1">
@@ -45,7 +53,7 @@ export const SidebarRoutes = () => {
       </div>
 
       <ul className="flex flex-col gap-y-1 px-3">
-        <SidebarItem href={pathname} label="Billing" icon={CreditCard} onClick={() => {}} />
+        {!shouldBlock && <SidebarItem href={pathname} label="Billing" icon={CreditCard} onClick={onClick} />}
 
         <SidebarItem href="mailto:contact@example.com" label="Get Help" icon={MessageCircleQuestion} />
       </ul>
