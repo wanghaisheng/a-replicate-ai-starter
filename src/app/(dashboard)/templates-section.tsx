@@ -5,16 +5,19 @@ import { useRouter } from 'next/navigation';
 
 import { useCreateProject } from '@/features/projects/api/use-create-project';
 import { type ResponseType, useGetTemplates } from '@/features/projects/api/use-get-templates';
+import { usePaywall } from '@/features/subscriptions/hooks/use-paywall';
 
 import { TemplateCard } from './template-card';
 
 export const TemplatesSection = () => {
   const router = useRouter();
+  const { shouldBlock, triggerPaywall } = usePaywall();
+
   const { mutate: createProject, isPending: isCreatingProject } = useCreateProject();
   const { data, isLoading, isError } = useGetTemplates({ page: '1', limit: '4' });
 
   const onClick = (template: ResponseType) => {
-    // TODO: check if template is pro.
+    if (template.isPro && shouldBlock) return triggerPaywall();
 
     createProject(
       {

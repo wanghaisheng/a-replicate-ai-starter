@@ -6,6 +6,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Textarea } from '@/components/ui/textarea';
 import { useGenerateImage } from '@/features/ai/api/use-generate-image';
 import { type ActiveTool, type Editor } from '@/features/editor/types';
+import { usePaywall } from '@/features/subscriptions/hooks/use-paywall';
 import { cn } from '@/lib/utils';
 
 import { ToolSidebarClose } from './tool-sidebar-close';
@@ -18,16 +19,17 @@ interface AiSidebarProps {
 }
 
 export const AiSidebar = ({ editor, activeTool, onChangeActiveTool }: AiSidebarProps) => {
-  const { mutate: generateImage, isPending: isGeneratingImage } = useGenerateImage();
-
+  const { shouldBlock, triggerPaywall } = usePaywall();
   const [prompt, setPrompt] = useState('');
+
+  const { mutate: generateImage, isPending: isGeneratingImage } = useGenerateImage();
 
   const onClose = () => onChangeActiveTool('select');
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // TODO: block with paywall
+    if (shouldBlock) return triggerPaywall();
 
     generateImage(
       { prompt },
