@@ -7,6 +7,7 @@ import { extractRouterConfig } from 'uploadthing/server';
 
 import { appFileRouter } from '@/app/api/uploadthing/core';
 import { auth } from '@/auth';
+import { ModalProvider } from '@/components/modal-provider';
 import { Providers } from '@/components/providers';
 import { Toaster } from '@/components/ui/sonner';
 import { cn } from '@/lib/utils';
@@ -32,6 +33,7 @@ const RootLayout = async ({ children }: Readonly<PropsWithChildren>) => {
           <Providers>
             <NextSSRPlugin routerConfig={extractRouterConfig(appFileRouter)} />
             <Toaster theme="light" closeButton richColors />
+            <ModalProvider />
 
             {children}
           </Providers>
