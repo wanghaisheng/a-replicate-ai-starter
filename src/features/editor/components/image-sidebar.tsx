@@ -1,3 +1,4 @@
+import { createId } from '@paralleldrive/cuid2';
 import { AlertTriangle, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -31,6 +32,16 @@ export const ImageSidebar = ({ editor, activeTool, onChangeActiveTool }: ImageSi
           appearance={{
             button: 'w-full text-sm font-medium',
             allowedContent: 'hidden',
+          }}
+          onBeforeUploadBegin={(files) => {
+            return files.map((f) => {
+              const fileExt = f.name.split('.').at(-1) ?? 'png';
+              const fileName = `${createId()}.${fileExt}`;
+
+              return new File([f], fileName, {
+                type: f.type,
+              });
+            });
           }}
           content={{
             button: 'Upload image',
