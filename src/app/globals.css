@@ -94,4 +94,10 @@
   box-shadow: none !important;
   border-radius: 0.5rem !important;
   overflow: hidden !important;
+  font-family: unset !important;
+}
+
+.chrome-picker label {
+  color: #111 !important;
+  font-weight: 600 !important;
 }
