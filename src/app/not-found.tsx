@@ -10,13 +10,13 @@ const NotFoundPage = () => {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
-      <div className="text-center space-y-6 max-w-xl">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-4">
+      <div className="max-w-xl space-y-6 text-center">
         <FileQuestion className="mx-auto size-20 text-blue-500" />
 
         <h1 className="text-4xl font-bold text-gray-900">404 - Page Not Found</h1>
         <p className="text-lg text-gray-600">
-          Oops! It looks like the page you're looking for doesn't exist. Maybe it was moved or renamed?
+          Oops! It looks like the page you&apos;re looking for doesn&apos;t exist. Maybe it was moved or renamed?
         </p>
 
         <div className="flex items-center justify-center space-x-4">
