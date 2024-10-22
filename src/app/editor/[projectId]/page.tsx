@@ -16,7 +16,7 @@ interface EditorProjectIdPageProps {
 const EditorProjectIdPage = ({ params }: EditorProjectIdPageProps) => {
   const { data, isLoading, isError } = useGetProject(params.projectId);
 
-  if (isLoading || !data) {
+  if (isLoading) {
     return (
       <div className="flex h-full flex-col items-center justify-center">
         <Loader2 className="size-6 animate-spin text-muted-foreground" />
@@ -24,7 +24,7 @@ const EditorProjectIdPage = ({ params }: EditorProjectIdPageProps) => {
     );
   }
 
-  if (isError) {
+  if (isError || !data) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-y-5">
         <TriangleAlert className="size-6 text-muted-foreground" />
