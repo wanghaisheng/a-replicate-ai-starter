@@ -1,6 +1,6 @@
 {
   "name": "canva-clone",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -14,6 +14,71 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio"
   },
+  "author": {
+    "name": "Sanidhya Kumar Verma",
+    "email": "sanidhya.verma12345@gmail.com",
+    "url": "https://github.com/sanidhyy"
+  },
+  "description": "Canva clone with customizable templates and AI-powered features for effortless visual creation.",
+  "keywords": [
+    "reactjs",
+    "nextjs",
+    "convex",
+    "next-auth",
+    "react-color",
+    "lucide-icons",
+    "react-icons",
+    "color-picker",
+    "shadcn-ui",
+    "radix-ui",
+    "tailwindcss",
+    "lodash",
+    "react-query",
+    "zustand",
+    "sonner",
+    "typescript",
+    "javascript",
+    "vercel",
+    "postcss",
+    "prettier",
+    "eslint",
+    "react-dom",
+    "html",
+    "css",
+    "zustand-state-management",
+    "infinite-query",
+    "real-time-features",
+    "ai-features",
+    "ai-background-remover",
+    "ai-image-generator",
+    "ai-generator",
+    "ui/ux",
+    "canva-clone",
+    "date-fns",
+    "cn",
+    "clsx",
+    "lucide-react"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sanidhyy/canva-clone.git"
+  },
+  "homepage": "https://github.com/sanidhyy/canva-clone#readme",
+  "bugs": {
+    "url": "https://github.com/sanidhyy/canva-clone/issues",
+    "email": "sanidhya.verma12345@gmail.com"
+  },
+  "funding": [
+    {
+      "type": "patreon",
+      "url": "https://www.patreon.com/sanidhy"
+    },
+    {
+      "type": "Buy me a coffee",
+      "url": "https://www.buymeacoffee.com/sanidhy"
+    }
+  ],
   "dependencies": {
     "@auth/core": "^0.37.0",
     "@auth/drizzle-adapter": "^1.7.0",
