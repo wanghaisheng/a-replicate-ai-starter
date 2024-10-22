@@ -9,9 +9,13 @@ const font = Space_Grotesk({
   subsets: ['latin'],
 });
 
-export const Logo = () => {
+interface LogoProps {
+  className?: string;
+}
+
+export const Logo = ({ className }: LogoProps) => {
   return (
-    <Link href="/">
+    <Link href="/" className={cn(className)}>
       <div className="flex h-[68px] items-center gap-x-2 px-4 transition hover:opacity-75">
         <div className="relative size-8">
           <Image src="/logo.svg" alt="Image AI" fill />

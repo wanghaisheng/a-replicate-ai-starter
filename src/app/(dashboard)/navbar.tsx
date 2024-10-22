@@ -1,10 +1,17 @@
 import { UserButton } from '@/features/auth/components/user-button';
 
+import { Logo } from './logo';
+import { MobileSidebar } from './mobile-sidebar';
+
 export const Navbar = () => {
   return (
     <nav className="flex h-[68px] w-full items-center p-4">
-      <div className="ml-auto">
+      <Logo className="lg:hidden" />
+
+      <div className="ml-auto flex items-center gap-x-3">
         <UserButton />
+
+        <MobileSidebar />
       </div>
     </nav>
   );

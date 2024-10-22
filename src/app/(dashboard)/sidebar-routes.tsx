@@ -13,12 +13,18 @@ import { usePaywall } from '@/features/subscriptions/hooks/use-paywall';
 
 import { SidebarItem } from './sidebar-item';
 
-export const SidebarRoutes = () => {
+interface SidebarRoutesProps {
+  onClick?: () => void;
+}
+
+export const SidebarRoutes = ({ onClick = () => {} }: SidebarRoutesProps) => {
   const pathname = usePathname();
   const { shouldBlock, triggerPaywall, isLoading } = usePaywall();
   const { mutate: checkoutBilling } = useBilling();
 
-  const onClick = () => {
+  const handleBilling = () => {
+    onClick();
+
     if (shouldBlock) return triggerPaywall();
 
     checkoutBilling();
@@ -30,7 +36,10 @@ export const SidebarRoutes = () => {
         {shouldBlock && (
           <>
             <Button
-              onClick={triggerPaywall}
+              onClick={() => {
+                onClick();
+                triggerPaywall();
+              }}
               disabled={isLoading}
               className="w-full rounded-xl border-none transition hover:bg-white hover:opacity-75"
               variant="outline"
@@ -48,7 +57,7 @@ export const SidebarRoutes = () => {
       </div>
 
       <ul className="flex flex-col gap-y-1 px-3">
-        <SidebarItem href="/" label="Home" icon={Home} isActive={pathname === '/'} />
+        <SidebarItem href="/" label="Home" icon={Home} onClick={onClick} isActive={pathname === '/'} />
       </ul>
 
       <div className="px-3">
@@ -56,9 +65,9 @@ export const SidebarRoutes = () => {
       </div>
 
       <ul className="flex flex-col gap-y-1 px-3">
-        {!shouldBlock && <SidebarItem href={pathname} label="Billing" icon={CreditCard} onClick={onClick} />}
+        {!shouldBlock && <SidebarItem href={pathname} label="Billing" icon={CreditCard} onClick={handleBilling} />}
 
-        <Link href={links.sourceCode} target="_blank" rel="noreferrer noopener">
+        <Link href={links.sourceCode} onClick={onClick} target="_blank" rel="noreferrer noopener">
           <div className="flex items-center rounded-xl bg-transparent p-3 transition hover:bg-white">
             <BsGithub className="mr-2 size-4" />
 
