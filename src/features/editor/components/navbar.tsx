@@ -13,17 +13,20 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Separator } from '@/components/ui/separator';
 import { UserButton } from '@/features/auth/components/user-button';
 import type { ActiveTool, Editor } from '@/features/editor/types';
+import { useRenameProjectModal } from '@/features/projects/store/use-rename-project-modal';
 
 import { Logo } from './logo';
 
 interface NavbarProps {
   id: string;
+  title: string;
   editor: Editor | undefined;
   activeTool: ActiveTool;
   onChangeActiveTool: (tool: ActiveTool) => void;
 }
 
-export const Navbar = ({ id, editor, activeTool, onChangeActiveTool }: NavbarProps) => {
+export const Navbar = ({ id, title, editor, activeTool, onChangeActiveTool }: NavbarProps) => {
+  const { onOpen } = useRenameProjectModal();
   const data = useMutationState({
     filters: {
       mutationKey: ['project', id],
@@ -56,7 +59,7 @@ export const Navbar = ({ id, editor, activeTool, onChangeActiveTool }: NavbarPro
     <nav className="flex h-[68px] w-full items-center gap-x-8 border-b p-4 lg:pl-[34px]">
       <Logo />
 
-      <div className="flex h-full w-full items-center gap-x-1">
+      <div className="flex size-full items-center gap-x-1">
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button size="sm" variant="ghost">
@@ -123,7 +126,13 @@ export const Navbar = ({ id, editor, activeTool, onChangeActiveTool }: NavbarPro
           </div>
         )}
 
-        <div className="ml-auto flex items-center gap-x-4">
+        <div className="ml-auto flex h-full items-center gap-x-4">
+          <Button variant="ghost" size="sm" onClick={() => onOpen(title)}>
+            {title}
+          </Button>
+
+          <Separator orientation="vertical" />
+
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
               <Button size="sm" variant="ghost">

@@ -94,7 +94,13 @@ export const Editor = ({ initialData }: EditorProps) => {
 
   return (
     <div className="flex h-full flex-col">
-      <Navbar id={initialData.id} editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
+      <Navbar
+        id={initialData.id}
+        title={initialData.name}
+        editor={editor}
+        activeTool={activeTool}
+        onChangeActiveTool={onChangeActiveTool}
+      />
 
       <div className="absolute top-[68px] flex h-[calc(100%_-_68px)] w-full">
         <Sidebar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />

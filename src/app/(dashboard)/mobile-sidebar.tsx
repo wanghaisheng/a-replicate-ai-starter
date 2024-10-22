@@ -24,13 +24,13 @@ export const MobileSidebar = () => {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger className="lg:hidden block" asChild>
+      <SheetTrigger className="block lg:hidden" asChild>
         <Button size="iconSm" variant="ghost">
           <MenuIcon className="size-6" />
         </Button>
       </SheetTrigger>
 
-      <SheetContent side="left" className="w-[300px] flex flex-col shrink-0 h-full bg-muted p-0">
+      <SheetContent side="left" className="flex h-full w-[300px] shrink-0 flex-col bg-muted p-0">
         <SheetHeader>
           <VisuallyHidden.Root>
             <SheetTitle>Image AI</SheetTitle>
