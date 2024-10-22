@@ -6,7 +6,8 @@ export const siteConfig: Metadata = {
   keywords: [
     'reactjs',
     'nextjs',
-    'convex',
+    'postgresql',
+    'postgres',
     'next-auth',
     'react-color',
     'lucide-icons',
@@ -38,6 +39,7 @@ export const siteConfig: Metadata = {
     'ai-image-generator',
     'ai-generator',
     'ui/ux',
+    'neon-db',
     'canva-clone',
 
     'date-fns',

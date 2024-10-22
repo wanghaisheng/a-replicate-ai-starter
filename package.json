@@ -23,7 +23,8 @@
   "keywords": [
     "reactjs",
     "nextjs",
-    "convex",
+    "postgresql",
+    "postgres",
     "next-auth",
     "react-color",
     "lucide-icons",
@@ -53,6 +54,7 @@
     "ai-image-generator",
     "ai-generator",
     "ui/ux",
+    "neon-db",
     "canva-clone",
     "date-fns",
     "cn",
