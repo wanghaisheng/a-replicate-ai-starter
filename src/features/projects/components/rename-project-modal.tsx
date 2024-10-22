@@ -8,21 +8,40 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input';
 import { useRenameProjectModal } from '@/features/projects/store/use-rename-project-modal';
 
+import { useUpdateProject } from '../api/use-update-project';
+
 export const RenameProjectModal = () => {
-  const { isOpen, onClose, title } = useRenameProjectModal();
+  const { isOpen, onClose, id, title } = useRenameProjectModal();
+  const { mutate: updateProject, isPending: isUpdatingProject } = useUpdateProject(id);
+
   const [name, setName] = useState(title);
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!name || name.length < 3 || name.length > 50) return;
+
+    updateProject(
+      {
+        name,
+      },
+      {
+        onSuccess: () => {
+          onClose();
+        },
+      },
+    );
+  };
 
   useEffect(() => {
     setName(title);
   }, [title]);
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen || isUpdatingProject} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-2xl">Rename your workspace</DialogTitle>
+          <DialogTitle className="text-2xl">Rename workspace</DialogTitle>
 
           <VisuallyHidden.Root>
             <DialogDescription>Quickly update and manage workspace name with ease.</DialogDescription>
@@ -31,6 +50,7 @@ export const RenameProjectModal = () => {
 
         <form onSubmit={handleSubmit} autoCapitalize="off" autoComplete="off">
           <Input
+            disabled={isUpdatingProject}
             placeholder="Workspace name"
             minLength={3}
             maxLength={50}
@@ -40,7 +60,7 @@ export const RenameProjectModal = () => {
           />
 
           <DialogFooter className="mt-4 gap-y-2 pt-2">
-            <Button type="submit" onClick={() => {}} className="ml-auto" disabled={false}>
+            <Button type="submit" className="ml-auto" disabled={isUpdatingProject}>
               Save
             </Button>
           </DialogFooter>

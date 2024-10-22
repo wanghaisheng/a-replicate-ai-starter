@@ -127,7 +127,7 @@ export const Navbar = ({ id, title, editor, activeTool, onChangeActiveTool }: Na
         )}
 
         <div className="ml-auto flex h-full items-center gap-x-4">
-          <Button variant="ghost" size="sm" onClick={() => onOpen(title)}>
+          <Button variant="ghost" size="sm" onClick={() => onOpen(id, title)}>
             {title}
           </Button>
 

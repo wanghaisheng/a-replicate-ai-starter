@@ -1,7 +1,7 @@
 'use client';
 
 import { formatDistanceToNow } from 'date-fns';
-import { AlertTriangle, CopyIcon, FileIcon, Loader2, MoreHorizontal, Search, Trash } from 'lucide-react';
+import { AlertTriangle, CopyIcon, FileIcon, Loader2, MoreHorizontal, Pencil, Search, Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -11,11 +11,13 @@ import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { useDeleteProject } from '@/features/projects/api/use-delete-project';
 import { useDuplicateProject } from '@/features/projects/api/use-duplicate-project';
 import { useGetProjects } from '@/features/projects/api/use-get-projects';
+import { useRenameProjectModal } from '@/features/projects/store/use-rename-project-modal';
 import { useConfirm } from '@/hooks/use-confirm';
 
 export const ProjectsSection = () => {
   const router = useRouter();
   const [ConfirmDialog, confirm] = useConfirm('Are you sure?', 'You are about to delete this project.');
+  const { onOpen } = useRenameProjectModal();
 
   const { mutate: duplicateProject, isPending: isDuplicatingProject } = useDuplicateProject();
   const { mutate: deleteProject, isPending: isDeletingProject } = useDeleteProject();
@@ -112,6 +114,15 @@ export const ProjectsSection = () => {
                       </DropdownMenuTrigger>
 
                       <DropdownMenuContent align="end" className="w-60">
+                        <DropdownMenuItem
+                          disabled={isPending}
+                          onClick={() => onOpen(project.id, project.name)}
+                          className="h-10 cursor-pointer"
+                        >
+                          <Pencil className="mr-2 size-4" />
+                          Rename
+                        </DropdownMenuItem>
+
                         <DropdownMenuItem disabled={isPending} onClick={() => onCopy(project.id)} className="h-10 cursor-pointer">
                           <CopyIcon className="mr-2 size-4" />
                           Make a copy
