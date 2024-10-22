@@ -10,6 +10,7 @@ import { auth } from '@/auth';
 import { ModalProvider } from '@/components/modal-provider';
 import { Providers } from '@/components/providers';
 import { Toaster } from '@/components/ui/sonner';
+import { siteConfig } from '@/config';
 import { SubscriptionAlert } from '@/features/subscriptions/components/subscription-alert';
 import { cn } from '@/lib/utils';
 
@@ -19,10 +20,7 @@ const inter = Inter({
   subsets: ['latin'],
 });
 
-export const metadata: Metadata = {
-  title: 'Canva Clone',
-  description: 'AI-Powered Canva clone using Next.js',
-};
+export const metadata: Metadata = siteConfig;
 
 const RootLayout = async ({ children }: Readonly<PropsWithChildren>) => {
   const session = await auth();
