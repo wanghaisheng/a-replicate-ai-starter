@@ -91,12 +91,10 @@ const app = new Hono()
 
     const session = event.data.object as Stripe.Checkout.Session;
 
+    if (!session?.metadata?.userId) return ctx.json(null);
+
     if (event.type === 'checkout.session.completed') {
       const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
-
-      if (!session?.metadata?.userId) {
-        return ctx.json('Invalid session!', 400);
-      }
 
       await db.insert(subscriptions).values({
         status: subscription.status,
@@ -112,10 +110,6 @@ const app = new Hono()
 
     if (event.type === 'invoice.payment_succeeded') {
       const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
-
-      if (!session?.metadata?.userId) {
-        return ctx.json('Invalid session!', 400);
-      }
 
       await db
         .update(subscriptions)
