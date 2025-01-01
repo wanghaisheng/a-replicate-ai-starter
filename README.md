@@ -1,3 +1,6 @@
+just dashboard
+
+
 <a name="readme-top"></a>
 
 # Canva clone with customizable templates and AI-powered features
